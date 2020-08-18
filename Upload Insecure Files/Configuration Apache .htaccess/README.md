@@ -27,7 +27,7 @@ AddType application/x-httpd-php .htaccess
 
 # .htaccess upload as image
 
-If the `exif_imagetype` function is used on the server side to determine the image type, create a `.htaccess/image` polyglot. 
+If the `exif_imagetype` function is used on the server side to determine the image type, create a `.htaccess/image` polyglot.
 
 [Supported image types](http://php.net/manual/en/function.exif-imagetype.php#refsect1-function.exif-imagetype-constants) include [X BitMap (XBM)](https://en.wikipedia.org/wiki/X_BitMap) and [WBMP](https://en.wikipedia.org/wiki/Wireless_Application_Protocol_Bitmap_Format). In `.htaccess` ignoring lines starting with `\x00` and `#`, you can use these scripts for generate a valid `.htaccess/image` polyglot.
 
@@ -43,7 +43,9 @@ with open('.htaccess', 'w') as htaccess:
     htaccess.write('#define test_height %d\n' % (height, ))
     htaccess.write(payload)
 ```
+
 or
+
 ```python
 # create valid .htaccess/wbmp image
 

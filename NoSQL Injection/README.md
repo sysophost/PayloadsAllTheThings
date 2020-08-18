@@ -70,11 +70,9 @@ Extract data with "in"
 {"username":{"$in":["Admin", "4dm1n", "admin", "root", "administrator"]},"password":{"$gt":""}}
 ```
 
-
 ## Blind NoSQL
 
 ### POST with JSON body
-
 
 ```python
 import requests

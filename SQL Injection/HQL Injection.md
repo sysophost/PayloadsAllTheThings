@@ -1,6 +1,7 @@
-# Hibernate Query Language Injection 
+# Hibernate Query Language Injection
 
 > Hibernate ORM (Hibernate in short) is an object-relational mapping tool for the Java programming language. It provides a framework for mapping an object-oriented domain model to a relational database. - Wikipedia
+
 ## Summary
 
 * [HQL Comments](#hql-comments)
@@ -19,7 +20,7 @@ HQL does not support comments
 ```sql
 from BlogPosts
 where title like '%'
-  and DOESNT_EXIST=1 and ''='%' -- 
+  and DOESNT_EXIST=1 and ''='%' --
   and published = true
 ```
 

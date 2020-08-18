@@ -1,6 +1,5 @@
 # Image Tragik 1 & 2
 
-
 ## Exploit v1
 
 Simple reverse shell

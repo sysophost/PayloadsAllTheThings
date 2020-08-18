@@ -50,7 +50,7 @@ git clone https://github.com/ChrisTruncer/EyeWitness.git
 ### Using Google Dorks and Google Transparency Report
 
 You need to include subdomains ;)
-https://www.google.com/transparencyreport/https/ct/?hl=en-US#domain=[DOMAIN]g&incl_exp=true&incl_sub=true
+<https://www.google.com/transparencyreport/https/ct/?hl=en-US#domain=[DOMAIN>]g&incl_exp=true&incl_sub=true
 
 ```bash
 site:*.domain.com -www
@@ -90,12 +90,12 @@ go get github.com/subfinder/subfinder
 ### Using Findomain
 
 ```powershell
-$ wget https://github.com/Edu4rdSHL/findomain/releases/latest/download/findomain-linux
-$ chmod +x findomain-linux
-$ findomain_spyse_token="YourAccessToken"
-$ findomain_virustotal_token="YourAccessToken" 
-$ findomain_fb_token="YourAccessToken" 
-$ ./findomain-linux -t example.com -o
+wget https://github.com/Edu4rdSHL/findomain/releases/latest/download/findomain-linux
+chmod +x findomain-linux
+findomain_spyse_token="YourAccessToken"
+findomain_virustotal_token="YourAccessToken"
+findomain_fb_token="YourAccessToken"
+./findomain-linux -t example.com -o
 ```
 
 ### Using Aquatone - old version (Ruby)

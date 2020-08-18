@@ -68,7 +68,8 @@ If you get any LaTex error, consider using base64 to get the result without bad 
 
 ## Cross Site Scripting
 
-From [@EdOverflow](https://twitter.com/intigriti/status/1101509684614320130) 
+From [@EdOverflow](https://twitter.com/intigriti/status/1101509684614320130)
+
 ```bash
 \url{javascript:alert(1)}
 \href{javascript:alert(1)}{placeholder}

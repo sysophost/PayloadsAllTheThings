@@ -43,7 +43,6 @@ From : `http://www.thespanner.co.uk/2014/03/21/rpo/`
 
 IE will read and write (decode) HTML multiple time and attackers XSS payload will mutate and execute.
 
-
 ## References
 
 - [TODO](TODO)

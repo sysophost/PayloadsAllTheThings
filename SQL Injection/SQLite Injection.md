@@ -13,6 +13,7 @@
 * [Remote Command Execution using SQLite command - Attach Database](#remote-command-execution-using-sqlite-command---attach-database)
 * [Remote Command Execution using SQLite command - Load_extension](#remote-command-execution-using-sqlite-command---load_extension)
 * [References](#references)
+
 ## SQLite comments
 
 ```sql

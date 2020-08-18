@@ -14,7 +14,7 @@
 
 From [@abugzlife1](https://twitter.com/abugzlife1/status/1125663944272748544) tweet.
 
-> Do you have HTML injection but can't get XSS? Are there any OAuth implementations on the site? If so, setup an img tag to your server and see if there's a way to get the victim there (redirect, etc.) after login to steal OAuth tokens via referer 
+> Do you have HTML injection but can't get XSS? Are there any OAuth implementations on the site? If so, setup an img tag to your server and see if there's a way to get the victim there (redirect, etc.) after login to steal OAuth tokens via referer
 
 ## Grabbing OAuth Token via redirect_uri
 
@@ -53,7 +53,7 @@ Some Android/iOS app can be decompiled and the OAuth Private key can be accessed
 ## Authorization Code Rule Violation
 
 > The client MUST NOT use the authorization code  more than once.  
-If an authorization code is used more than once, the authorization server MUST deny the request 
+If an authorization code is used more than once, the authorization server MUST deny the request
 and SHOULD revoke (when possible) all tokens previously issued based on that authorization code.
 
 ## Cross-Site Request Forgery
@@ -68,4 +68,5 @@ Applications that do not check for a valid CSRF token in the OAuth callback are 
 * [OAuth 2 - How I have hacked Facebook again (..and would have stolen a valid access token) - INTO THE SYMMETRY](http://intothesymmetry.blogspot.ch/2014/04/oauth-2-how-i-have-hacked-facebook.html)
 * [How I hacked Github again. - Egor Homakov](http://homakov.blogspot.ch/2014/02/how-i-hacked-github-again.html)
 * [How Microsoft is giving your data to Facebook… and everyone else - Andris Atteka](http://andrisatteka.blogspot.ch/2014/09/how-microsoft-is-giving-your-data-to.html)
+
 - [Bypassing Google Authentication on Periscope's Administration Panel](https://whitton.io/articles/bypassing-google-authentication-on-periscopes-admin-panel/) By Jack Whitton

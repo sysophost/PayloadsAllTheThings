@@ -6,16 +6,16 @@ Uploaded files may pose a significant risk if not handled correctly. A remote at
 
 * [Tools](#tools)
 * [Exploits](#exploits)
-    * [PHP Extension](#php-extension)
-    * [Other extensions](#other-extensions)
-    * [Upload tricks](#upload-tricks)
-    * [Picture upload with LFI](#picture-upload-with-lfi)
-    * [Configuration Files](#configuration-files)
-    * [CVE - Image Tragik](#cve---image-tragik)
+  * [PHP Extension](#php-extension)
+  * [Other extensions](#other-extensions)
+  * [Upload tricks](#upload-tricks)
+  * [Picture upload with LFI](#picture-upload-with-lfi)
+  * [Configuration Files](#configuration-files)
+  * [CVE - Image Tragik](#cve---image-tragik)
 * [References](#references)
 
-
 ## Tools
+
 - [Fuxploider](https://github.com/almandin/fuxploider)
 
 ## Exploits
@@ -55,18 +55,18 @@ Coldfusion: .cfm, .cfml, .cfc, .dbm
 ### Upload tricks
 
 - Null byte (works well against `pathinfo()`)
-    * .php%00.gif
-    * .php\x00.gif
-    * .php%00.png
-    * .php\x00.png
-    * .php%00.jpg
-    * .php\x00.jpg
+  * .php%00.gif
+  * .php\x00.gif
+  * .php%00.png
+  * .php\x00.png
+  * .php%00.jpg
+  * .php\x00.jpg
 - Mime type, change `Content-Type : application/x-php` or `Content-Type : application/octet-stream` to `Content-Type : image/gif`
-    * `Content-Type : image/gif`
-    * `Content-Type : image/png`
-    * `Content-Type : image/jpeg`
+  * `Content-Type : image/gif`
+  * `Content-Type : image/png`
+  * `Content-Type : image/jpeg`
 - [Magic Bytes](https://en.wikipedia.org/wiki/List_of_file_signatures)
-    
+
     Sometimes applications identify file types based on their first signature bytes. Adding/replacing them in a file might trick the application.
 
 ### Picture upload with LFI
@@ -82,7 +82,6 @@ Valid pictures hosting PHP code. Upload the picture and use a local file inclusi
 - web.config
 - httpd.conf
 - \_\_init\_\_.py
-
 
 ### CVE - Image Tragik
 

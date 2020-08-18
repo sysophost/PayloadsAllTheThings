@@ -27,20 +27,20 @@
 
 ## Passive recon
 
-* Using Shodan (https://www.shodan.io/) to detect similar app
+* Using Shodan (<https://www.shodan.io/>) to detect similar app
 
   ```bash
   can be integrated with nmap (https://github.com/glennzw/shodan-hq-nse)
   nmap --script shodan-hq.nse --script-args 'apikey=<yourShodanAPIKey>,target=<hackme>'
   ```
 
-* Using The Wayback Machine (https://archive.org/web/) to detect forgotten endpoints
+* Using The Wayback Machine (<https://archive.org/web/>) to detect forgotten endpoints
 
   ```bash
   look for JS files, old links
   ```
 
-* Using The Harvester (https://github.com/laramies/theHarvester)
+* Using The Harvester (<https://github.com/laramies/theHarvester>)
 
   ```python
   python theHarvester.py -b all -d domain.com
@@ -182,9 +182,9 @@ masscan -e tun0 -p1-65535,U:1-65535 10.10.10.97 --rate 1000
   host -t ns domain.local
   domain.local name server master.domain.local.
 
-  host master.domain.local        
+  host master.domain.local
   master.domain.local has address 192.168.1.1
- 
+
   dig axfr domain.local @192.168.1.1
   ```
 
@@ -267,7 +267,7 @@ masscan -e tun0 -p1-65535,U:1-65535 10.10.10.97 --rate 1000
 * Payment functionality - [@gwendallecoguic](https://twitter.com/gwendallecoguic/status/988138794686779392)
   > if the webapp you're testing uses an external payment gateway, check the doc to find the test credit numbers, purchase something and if the webapp didn't disable the test mode, it will be free
 
-  From https://stripe.com/docs/testing#cards : "Use any of the following test card numbers, a valid expiration date in the future, and any random CVC number, to create a successful payment. Each test card's billing country is set to U.S. "
+  From <https://stripe.com/docs/testing#cards> : "Use any of the following test card numbers, a valid expiration date in the future, and any random CVC number, to create a successful payment. Each test card's billing country is set to U.S. "
   e.g :
 
 Test card numbers and tokens  
@@ -278,7 +278,7 @@ Test card numbers and tokens
 | 4000056655665556 | Visa (debit)   | tok_visa_debit |
 | 5555555555554444 | Mastercard     | tok_mastercard |
 
-International test card numbers and tokens     
+International test card numbers and tokens
 
 | NUMBER           | TOKEN          | COUNTRY        | BRAND          |
 | :-------------   | :------------- | :------------- | :------------- |

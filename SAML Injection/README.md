@@ -17,7 +17,6 @@
 
 - [SAML Raider - Burp Extension](https://github.com/SAMLRaider/SAMLRaider)
 
-
 ## Authentication Bypass
 
 A SAML Response should contain the `<samlp:Response xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"`.
@@ -76,7 +75,6 @@ XML Signature Wrapping (XSW) attack, some implementations check for a valid sign
 - XSW7 – Applies to SAML Assertion messages. Add an “Extensions” block with a cloned unsigned assertion.
 - XSW8 – Applies to SAML Assertion messages. Add an “Object” block containing a copy of the original assertion with the signature removed.
 
-
 In the following example, these terms are used.
 
 - FA: Forged Assertion
@@ -100,7 +98,6 @@ In the following example, these terms are used.
 
 In the Github Enterprise vulnerability, this request would verify and create a sessions for `Attacker` instead of `Legitimate User`, even if `FA` is not signed.
 
-
 ### XML Comment Handling
 
 A threat actor who already has authenticated access into a SSO system can authenticate as another user without that individual’s SSO password. This [vulnerability](https://www.bleepstatic.com/images/news/u/986406/attacks/Vulnerabilities/SAML-flaw.png) has multiple CVE in the following libraries and products.
@@ -121,6 +118,7 @@ Researchers have noticed that if an attacker inserts a comment inside the userna
         <Subject>
             <NameID>user@user.com<!--XMLCOMMENT-->.evil.com</NameID>
 ```
+
 Where `user@user.com` is the first part of the username, and `.evil.com` is the second.
 
 ### XML External Entity
@@ -128,6 +126,7 @@ Where `user@user.com` is the first part of the username, and `.evil.com` is the 
 An alternative exploitation would use `XML entities` to bypass the signature verification, since the content will not change, except during XML parsing.
 
 In the following example:
+
 - `&s;` will resolve to the string `"s"`
 - `&f1;` will resolve to the string `"f1"`
 
@@ -156,13 +155,12 @@ In the following example:
 
 The SAML response is accepted by the service provider. Due to the vulnerability, the service provider application reports "taf" as the value of the "uid" attribute.
 
-
 ### Extensible Stylesheet Language Transformation
 
 An XSLT can be carried out by using the `transform` element.
 
-![http://sso-attacks.org/images/4/49/XSLT1.jpg](http://sso-attacks.org/images/4/49/XSLT1.jpg)    
-Picture from [http://sso-attacks.org/XSLT_Attack](http://sso-attacks.org/XSLT_Attack)    
+![http://sso-attacks.org/images/4/49/XSLT1.jpg](http://sso-attacks.org/images/4/49/XSLT1.jpg)
+Picture from [http://sso-attacks.org/XSLT_Attack](http://sso-attacks.org/XSLT_Attack)
 
 ```xml
 <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">

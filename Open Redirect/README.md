@@ -13,12 +13,13 @@
 
 ## Exploitation
 
-Let’s say there’s a `well known` website - https://famous-website.tld/. And let's assume that there's a link like :
+Let’s say there’s a `well known` website - <https://famous-website.tld/>. And let's assume that there's a link like :
 
 ```powershell
 https://famous-website.tld/signup?redirectUrl=https://famous-website.tld/account
 ```
-After signing up you get redirected to your account, this redirection is specified by the `redirectUrl` parameter in the URL.   
+
+After signing up you get redirected to your account, this redirection is specified by the `redirectUrl` parameter in the URL.
 What happens if we change the `famous-website.tld/account` to `evil-website.tld`?
 
 ```powerhshell
@@ -26,7 +27,6 @@ https://famous-website.tld/signup?redirectUrl=https://evil-website.tld/account
 ```
 
 By visiting this url, if we get redirected to `evil-website.tld` after the signup, we have an Open Redirect vulnerability. This can be abused by an attacker to display a phishing page asking you to enter your credentials.
-
 
 ## HTTP Redirection Status Code - 3xx
 
@@ -115,6 +115,7 @@ http://www.yoursite.com/folder/www.folder.com
 ```
 
 Host/Split Unicode Normalization
+
 ```powershell
 https://evil.c℀.example.com . ---> https://evil.ca/c.example.com
 http://a.com／X.b.com

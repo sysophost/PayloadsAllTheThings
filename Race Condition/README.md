@@ -1,6 +1,6 @@
 # Race Condition
 
-> Race conditions may occur when a process is critically or unexpectedly dependent on the sequence or timings of other events. In a web application environment, where multiple requests can be processed at a given time, developers may leave concurrency to be handled by the framework, server, or programming language. 
+> Race conditions may occur when a process is critically or unexpectedly dependent on the sequence or timings of other events. In a web application environment, where multiple requests can be processed at a given time, developers may leave concurrency to be handled by the framework, server, or programming language.
 
 ## Summary
 
@@ -16,6 +16,7 @@
 
 1. Send request to turbo intruder
 2. Use this python code as a payload of the turbo intruder
+
     ```python
     def queueRequests(target, wordlists):
         engine = RequestEngine(endpoint=target.endpoint,
@@ -38,9 +39,9 @@
     def handleResponse(req, interesting):
         table.add(req)
     ```
+
 3. Now set the external HTTP header x-request: %s - :warning: This is needed by the turbo intruder
 4. Click "Attack"
-
 
 ## References
 

