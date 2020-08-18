@@ -6,11 +6,9 @@ I :heart: pull requests :)
 
 You can also contribute with a :beers: IRL, or using the sponsor button.
 
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/swisskyrepo/PayloadsAllTheThings/master/.github/banner.png">
+  <img src="/.github/banner.png">
 </p>
-
 
 Every section contains the following files, you can use the `_template_vuln` folder to create a new chapter:
 
@@ -21,26 +19,25 @@ Every section contains the following files, you can use the `_template_vuln` fol
 
 You might also like the `Methodology and Resources` folder :
 
-- [Methodology and Resources](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/)
-  - [Active Directory Attack.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md)
-  - [Cloud - AWS Pentest.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Cloud%20-%20AWS%20Pentest.md)
-  - [Cloud - Azure Pentest.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Cloud%20-%20Azure%20Pentest.md)
-  - [Cobalt Strike - Cheatsheet.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Cobalt%20Strike%20-%20Cheatsheet.md)
-  - [Linux - Persistence.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Linux%20-%20Persistence.md)
-  - [Linux - Privilege Escalation.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Linux%20-%20Privilege%20Escalation.md)
-  - [Metasploit - Cheatsheet.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Metasploit%20-%20Cheatsheet.md)  
-  - [Methodology and enumeration.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Methodology%20and%20enumeration.md)
-  - [Network Pivoting Techniques.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Network%20Pivoting%20Techniques.md)
-  - [Network Discovery.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Network%20Discovery.md)
-  - [Reverse Shell Cheatsheet.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md)
-  - [Subdomains Enumeration.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Subdomains%20Enumeration.md)
-  - [Windows - Download and Execute.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Download%20and%20Execute.md)
-  - [Windows - Mimikatz.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Mimikatz.md)
-  - [Windows - Persistence.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Persistence.md)
-  - [Windows - Post Exploitation Koadic.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Post%20Exploitation%20Koadic.md)
-  - [Windows - Privilege Escalation.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md)
-  - [Windows - Using credentials.md](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Using%20credentials.md)
-- [CVE Exploits](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/CVE%20Exploits)
+- [Methodology and Resources](/Methodology%20and%20Resources/)
+  - [Active Directory Attack.md](/Methodology%20and%20Resources/Active%20Directory%20Attack.md)
+  - [Cloud - AWS Pentest.md](/Methodology%20and%20Resources/Cloud%20-%20AWS%20Pentest.md)
+  - [Cloud - Azure Pentest.md](/Methodology%20and%20Resources/Cloud%20-%20Azure%20Pentest.md)
+  - [Cobalt Strike - Cheatsheet.md](/Methodology%20and%20Resources/Cobalt%20Strike%20-%20Cheatsheet.md)
+  - [Linux - Persistence.md](/Methodology%20and%20Resources/Linux%20-%20Persistence.md)
+  - [Linux - Privilege Escalation.md](/Methodology%20and%20Resources/Linux%20-%20Privilege%20Escalation.md)
+  - [Metasploit - Cheatsheet.md](/Methodology%20and%20Resources/Metasploit%20-%20Cheatsheet.md)  
+  - [Methodology and enumeration.md](/Methodology%20and%20Resources/Methodology%20and%20enumeration.md)
+  - [Network Pivoting Techniques.md](/Methodology%20and%20Resources/Network%20Pivoting%20Techniques.md)
+  - [Network Discovery.md](/Methodology%20and%20Resources/Network%20Discovery.md)
+  - [Reverse Shell Cheatsheet.md](/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md)
+  - [Subdomains Enumeration.md](/Methodology%20and%20Resources/Subdomains%20Enumeration.md)
+  - [Windows - Download and Execute.md](/Methodology%20and%20Resources/Windows%20-%20Download%20and%20Execute.md)
+  - [Windows - Mimikatz.md](/Methodology%20and%20Resources/Windows%20-%20Mimikatz.md)
+  - [Windows - Persistence.md](/Methodology%20and%20Resources/Windows%20-%20Persistence.md)
+  - [Windows - Post Exploitation Koadic.md](/Methodology%20and%20Resources/Windows%20-%20Post%20Exploitation%20Koadic.md)
+  - [Windows - Privilege Escalation.md](/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md)
+  - [Windows - Using credentials.md](/Methodology%20and%20Resources/Windows%20-%20Using%20credentials.md)
+- [CVE Exploits](/CVE%20Exploits)
 
-
-You want more ? Check the [Books](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/BOOKS.md) and [Youtube videos](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/YOUTUBE.md) selections.
+You want more ? Check the [Books](/BOOKS.md) and [Youtube videos](/YOUTUBE.md) selections.
